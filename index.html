@@ -75,9 +75,32 @@
             animation: text-shimmer-gold 5s linear infinite;
         }
 
-        /* Gradientes Estáticos True Gold para Bordas e Fios de Luz */
+        /* Gradientes Estáticos True Gold */
         .bg-true-gold-gradient {
             background: linear-gradient(135deg, #7A5B22 0%, #FBF5B7 50%, #9E7B3A 100%);
+        }
+
+        /* Animação do Feixe de Ouro no Contorno dos Diamantes */
+        @keyframes border-spin {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        .diamond-beam-border {
+            position: relative;
+            overflow: hidden;
+        }
+        .diamond-beam-border::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            /* Ouro base com um foco denso de luz brilhante (Feixe Ouro 18k) */
+            background: conic-gradient(from 0deg, #7A5B22 0%, #9E7B3A 20%, #7A5B22 40%, #7A5B22 70%, #FBF5B7 90%, #7A5B22 100%);
+            animation: border-spin 3.5s linear infinite;
+            transform-origin: center;
+            z-index: 0;
         }
 
         /* Efeitos de Revelação de Alta Performance (Intersection Observer) */
@@ -95,14 +118,6 @@
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* Reflexo Especular no Diamante Joia */
-        .diamond-reflection {
-            transform: translateX(-150%) translateY(-50%) rotate(-45deg);
-            transition: transform 1.5s ease-in-out;
-        }
-        .group:hover .diamond-reflection {
-            transform: translateX(150%) translateY(50%) rotate(-45deg);
-        }
     </style>
 </head>
 <body>
@@ -127,7 +142,7 @@
     </header>
 
     <!-- 1. HERO SECTION: MINIMALISMO & PRECISÃO -->
-    <section class="relative min-h-[100svh] flex flex-col items-center justify-center px-0 text-center overflow-hidden pt-28 md:pt-32 bg-aureum-surface">
+    <section class="relative min-h-[100svh] flex flex-col items-center justify-center px-0 text-center overflow-hidden pt-20 md:pt-32 bg-aureum-surface">
         
         <!-- Fotografia de Fundo (Pele e Geometria) -->
         <div id="hero-bg" class="absolute bottom-0 w-full h-full flex items-center justify-center z-0 transition-transform duration-100 ease-out p-3 md:p-6 opacity-80">
@@ -138,82 +153,81 @@
         </div>
 
         <!-- Conteúdo Minimalista Seguro -->
-        <div class="relative z-20 w-full max-w-5xl flex flex-col items-center justify-center flex-grow px-4 md:px-6 pb-16">
+        <div class="relative z-20 w-full max-w-5xl flex flex-col items-center justify-center flex-grow px-2 md:px-6 pb-24 md:pb-16">
             
-            <span class="reveal text-aureum-dark-nude text-[9px] md:text-[11px] font-bold uppercase tracking-[0.6em] mb-8 md:mb-12">
-                Cosmiatria de Alta Precisão
+            <!-- Etiqueta Oficializando a Clínica -->
+            <span class="reveal text-aureum-dark-nude text-[8px] md:text-[11px] font-bold uppercase tracking-[0.6em] mb-4 md:mb-12">
+                Clínica de Cosmiatria de Alta Precisão
             </span>
 
             <!-- Título Supremo -->
-            <h1 class="reveal text-[4.5rem] sm:text-[6rem] md:text-[9.5rem] lg:text-[11rem] font-serif leading-[0.85] tracking-tighter text-aureum-dark-nude drop-shadow-sm" style="transition-delay: 0.1s;">
+            <h1 class="reveal text-[4rem] sm:text-[6rem] md:text-[9.5rem] lg:text-[11rem] font-serif leading-[0.85] tracking-tighter text-aureum-dark-nude drop-shadow-sm" style="transition-delay: 0.1s;">
                 Geometria <br />
                 <span class="italic shimmer-true-gold font-light">do Poder.</span>
             </h1>
 
-            <!-- Subheadline Limpa (Sem Card) -->
-            <p class="reveal text-[10px] md:text-[12px] uppercase tracking-[0.2em] leading-relaxed text-aureum-dark-nude/80 font-medium max-w-lg mt-8 md:mt-10" style="transition-delay: 0.2s;">
+            <!-- Subheadline Limpa -->
+            <p class="reveal text-[9px] md:text-[12px] uppercase tracking-[0.2em] leading-relaxed text-aureum-dark-nude/80 font-medium max-w-lg mt-4 md:mt-10" style="transition-delay: 0.2s;">
                 A ciência clínica que esculpe a sua autoridade. <br class="hidden md:block" /> Resultados imperceptíveis, simetria absoluta.
             </p>
 
-            <!-- NOVO CTA DE FUNIL NO HERO (Ação Imediata) -->
-            <a href="#diag-content" class="reveal mt-8 md:mt-10 inline-flex items-center justify-center px-10 py-4 border border-[#9E7B3A]/50 bg-aureum-dark-nude/10 backdrop-blur-md text-aureum-dark-nude text-[9px] md:text-[10px] uppercase tracking-[0.3em] font-bold rounded-full hover:bg-aureum-dark-nude hover:text-[#FBF5B7] hover:border-aureum-dark-nude transition-all duration-500 shadow-lg hover:shadow-xl" style="transition-delay: 0.3s;">
-                Agendar Mapeamento Facial
+            <!-- NOVO CTA DE FUNIL NO HERO (Ação Imediata para Conversão) -->
+            <a href="#diag-content" class="reveal mt-6 md:mt-10 inline-flex items-center justify-center px-8 py-3 md:px-10 md:py-4 border border-[#9E7B3A]/50 bg-aureum-dark-nude/10 backdrop-blur-md text-aureum-dark-nude text-[8px] md:text-[10px] uppercase tracking-[0.3em] font-bold rounded-full hover:bg-aureum-dark-nude hover:text-[#FBF5B7] hover:border-aureum-dark-nude transition-all duration-500 shadow-lg hover:shadow-xl" style="transition-delay: 0.3s;">
+                Agendar Mapeamento
             </a>
 
-            <!-- OS DIAMANTES JOIA (1 Linha no Mobile - Nomenclatura Científica) -->
-            <div class="w-full flex overflow-x-auto hide-scrollbar snap-x snap-mandatory gap-6 md:gap-12 px-6 md:px-0 py-10 items-center md:justify-center mt-6 md:mt-10">
+            <!-- OS DIAMANTES JOIA (Translucidez & Feixe de Ouro na Borda) -->
+            <div class="w-full flex flex-row flex-nowrap justify-center gap-2 min-[400px]:gap-4 sm:gap-6 md:gap-12 px-2 md:px-0 items-center mt-8 md:mt-10">
                 
                 <!-- Diamante 1 -->
-                <button class="reveal snap-center shrink-0 relative group focus:outline-none rounded-xl mx-2" aria-label="Modulação Muscular" style="transition-delay: 0.4s;">
-                    <div class="w-[5.5rem] h-[5.5rem] md:w-32 md:h-32 rotate-45 rounded-[1rem] bg-true-gold-gradient p-[1.5px] shadow-[0_15px_30px_rgba(158,123,58,0.25)] group-hover:scale-105 transition-all duration-500">
-                        <div class="w-full h-full rounded-[0.9rem] bg-aureum-dark-nude relative overflow-hidden flex items-center justify-center">
-                            <div class="absolute top-0 left-0 w-full h-[250%] bg-gradient-to-b from-[#FBF5B7]/20 to-transparent diamond-reflection pointer-events-none"></div>
-                            <div class="-rotate-45 flex flex-col items-center justify-center text-center w-full h-full z-10">
-                                <span class="text-aureum-light text-[7px] md:text-[9.5px] font-bold uppercase tracking-[0.2em] group-hover:text-true-gold-light transition-colors">Modulação</span>
-                                <div class="w-4 md:w-6 h-[1px] bg-gradient-to-r from-transparent via-[#9E7B3A] to-transparent my-1 group-hover:w-8 transition-all"></div>
-                                <span class="text-aureum-light/60 text-[6px] md:text-[7.5px] font-semibold uppercase tracking-widest">Muscular</span>
+                <button class="reveal relative group focus:outline-none rounded-xl" aria-label="Modulação Muscular" style="transition-delay: 0.4s;">
+                    <!-- Borda Animada (Feixe de Ouro Girando) -->
+                    <div class="w-[3.5rem] h-[3.5rem] min-[400px]:w-[4.2rem] min-[400px]:h-[4.2rem] sm:w-[5.5rem] sm:h-[5.5rem] md:w-32 md:h-32 rotate-45 rounded-[0.6rem] md:rounded-[1rem] diamond-beam-border p-[1px] md:p-[1.5px] shadow-[0_10px_20px_rgba(158,123,58,0.25)] group-hover:scale-105 transition-all duration-500">
+                        <!-- Núcleo Translúcido (Sem efeito interno, fundo esfumaçado vaza) -->
+                        <div class="w-full h-full rounded-[0.5rem] md:rounded-[0.9rem] bg-aureum-dark-nude/40 backdrop-blur-xl relative flex items-center justify-center z-10">
+                            <div class="-rotate-45 flex flex-col items-center justify-center text-center w-full h-full">
+                                <span class="text-aureum-light text-[4px] min-[400px]:text-[5px] sm:text-[7px] md:text-[9.5px] font-bold uppercase tracking-[0.1em] md:tracking-[0.2em] group-hover:text-true-gold-light transition-colors">Modulação</span>
+                                <div class="w-3 sm:w-4 md:w-6 h-[1px] bg-gradient-to-r from-transparent via-[#9E7B3A] to-transparent my-0.5 md:my-1 group-hover:w-6 md:group-hover:w-8 transition-all"></div>
+                                <span class="text-aureum-light/60 text-[3.5px] min-[400px]:text-[4.5px] sm:text-[6px] md:text-[7.5px] font-semibold uppercase tracking-widest">Muscular</span>
                             </div>
                         </div>
                     </div>
                 </button>
 
                 <!-- Diamante 2 -->
-                <button class="reveal snap-center shrink-0 relative group focus:outline-none rounded-xl mx-2" aria-label="Arquitetura Facial" style="transition-delay: 0.5s;">
-                    <div class="w-[5.5rem] h-[5.5rem] md:w-32 md:h-32 rotate-45 rounded-[1rem] bg-true-gold-gradient p-[1.5px] shadow-[0_15px_30px_rgba(158,123,58,0.25)] group-hover:scale-105 transition-all duration-500">
-                        <div class="w-full h-full rounded-[0.9rem] bg-aureum-dark-nude relative overflow-hidden flex items-center justify-center">
-                            <div class="absolute top-0 left-0 w-full h-[250%] bg-gradient-to-b from-[#FBF5B7]/20 to-transparent diamond-reflection pointer-events-none"></div>
-                            <div class="-rotate-45 flex flex-col items-center justify-center text-center w-full h-full z-10">
-                                <span class="text-aureum-light text-[7px] md:text-[9.5px] font-bold uppercase tracking-[0.2em] group-hover:text-true-gold-light transition-colors">Arquitetura</span>
-                                <div class="w-4 md:w-6 h-[1px] bg-gradient-to-r from-transparent via-[#9E7B3A] to-transparent my-1 group-hover:w-8 transition-all"></div>
-                                <span class="text-aureum-light/60 text-[6px] md:text-[7.5px] font-semibold uppercase tracking-widest">Facial</span>
+                <button class="reveal relative group focus:outline-none rounded-xl" aria-label="Arquitetura Facial" style="transition-delay: 0.5s;">
+                    <div class="w-[3.5rem] h-[3.5rem] min-[400px]:w-[4.2rem] min-[400px]:h-[4.2rem] sm:w-[5.5rem] sm:h-[5.5rem] md:w-32 md:h-32 rotate-45 rounded-[0.6rem] md:rounded-[1rem] diamond-beam-border p-[1px] md:p-[1.5px] shadow-[0_10px_20px_rgba(158,123,58,0.25)] group-hover:scale-105 transition-all duration-500">
+                        <div class="w-full h-full rounded-[0.5rem] md:rounded-[0.9rem] bg-aureum-dark-nude/40 backdrop-blur-xl relative flex items-center justify-center z-10">
+                            <div class="-rotate-45 flex flex-col items-center justify-center text-center w-full h-full">
+                                <span class="text-aureum-light text-[4px] min-[400px]:text-[5px] sm:text-[7px] md:text-[9.5px] font-bold uppercase tracking-[0.1em] md:tracking-[0.2em] group-hover:text-true-gold-light transition-colors">Arquitetura</span>
+                                <div class="w-3 sm:w-4 md:w-6 h-[1px] bg-gradient-to-r from-transparent via-[#9E7B3A] to-transparent my-0.5 md:my-1 group-hover:w-6 md:group-hover:w-8 transition-all"></div>
+                                <span class="text-aureum-light/60 text-[3.5px] min-[400px]:text-[4.5px] sm:text-[6px] md:text-[7.5px] font-semibold uppercase tracking-widest">Facial</span>
                             </div>
                         </div>
                     </div>
                 </button>
 
                 <!-- Diamante 3 -->
-                <button class="reveal snap-center shrink-0 relative group focus:outline-none rounded-xl mx-2" aria-label="Bioestímulo Profundo" style="transition-delay: 0.6s;">
-                    <div class="w-[5.5rem] h-[5.5rem] md:w-32 md:h-32 rotate-45 rounded-[1rem] bg-true-gold-gradient p-[1.5px] shadow-[0_15px_30px_rgba(158,123,58,0.25)] group-hover:scale-105 transition-all duration-500">
-                        <div class="w-full h-full rounded-[0.9rem] bg-aureum-dark-nude relative overflow-hidden flex items-center justify-center">
-                            <div class="absolute top-0 left-0 w-full h-[250%] bg-gradient-to-b from-[#FBF5B7]/20 to-transparent diamond-reflection pointer-events-none"></div>
-                            <div class="-rotate-45 flex flex-col items-center justify-center text-center w-full h-full z-10">
-                                <span class="text-aureum-light text-[7px] md:text-[9.5px] font-bold uppercase tracking-[0.2em] group-hover:text-true-gold-light transition-colors">Bioestímulo</span>
-                                <div class="w-4 md:w-6 h-[1px] bg-gradient-to-r from-transparent via-[#9E7B3A] to-transparent my-1 group-hover:w-8 transition-all"></div>
-                                <span class="text-aureum-light/60 text-[6px] md:text-[7.5px] font-semibold uppercase tracking-widest">Profundo</span>
+                <button class="reveal relative group focus:outline-none rounded-xl" aria-label="Bioestímulo Profundo" style="transition-delay: 0.6s;">
+                    <div class="w-[3.5rem] h-[3.5rem] min-[400px]:w-[4.2rem] min-[400px]:h-[4.2rem] sm:w-[5.5rem] sm:h-[5.5rem] md:w-32 md:h-32 rotate-45 rounded-[0.6rem] md:rounded-[1rem] diamond-beam-border p-[1px] md:p-[1.5px] shadow-[0_10px_20px_rgba(158,123,58,0.25)] group-hover:scale-105 transition-all duration-500">
+                        <div class="w-full h-full rounded-[0.5rem] md:rounded-[0.9rem] bg-aureum-dark-nude/40 backdrop-blur-xl relative flex items-center justify-center z-10">
+                            <div class="-rotate-45 flex flex-col items-center justify-center text-center w-full h-full">
+                                <span class="text-aureum-light text-[4px] min-[400px]:text-[5px] sm:text-[7px] md:text-[9.5px] font-bold uppercase tracking-[0.1em] md:tracking-[0.2em] group-hover:text-true-gold-light transition-colors">Bioestímulo</span>
+                                <div class="w-3 sm:w-4 md:w-6 h-[1px] bg-gradient-to-r from-transparent via-[#9E7B3A] to-transparent my-0.5 md:my-1 group-hover:w-6 md:group-hover:w-8 transition-all"></div>
+                                <span class="text-aureum-light/60 text-[3.5px] min-[400px]:text-[4.5px] sm:text-[6px] md:text-[7.5px] font-semibold uppercase tracking-widest">Profundo</span>
                             </div>
                         </div>
                     </div>
                 </button>
 
                 <!-- Diamante 4 -->
-                <button class="reveal snap-center shrink-0 relative group focus:outline-none rounded-xl mx-2" aria-label="Lifting Tecnológico" style="transition-delay: 0.7s;">
-                    <div class="w-[5.5rem] h-[5.5rem] md:w-32 md:h-32 rotate-45 rounded-[1rem] bg-true-gold-gradient p-[1.5px] shadow-[0_15px_30px_rgba(158,123,58,0.25)] group-hover:scale-105 transition-all duration-500">
-                        <div class="w-full h-full rounded-[0.9rem] bg-aureum-dark-nude relative overflow-hidden flex items-center justify-center">
-                            <div class="absolute top-0 left-0 w-full h-[250%] bg-gradient-to-b from-[#FBF5B7]/20 to-transparent diamond-reflection pointer-events-none"></div>
-                            <div class="-rotate-45 flex flex-col items-center justify-center text-center w-full h-full z-10">
-                                <span class="text-aureum-light text-[7px] md:text-[9.5px] font-bold uppercase tracking-[0.2em] group-hover:text-true-gold-light transition-colors">Lifting</span>
-                                <div class="w-4 md:w-6 h-[1px] bg-gradient-to-r from-transparent via-[#9E7B3A] to-transparent my-1 group-hover:w-8 transition-all"></div>
-                                <span class="text-aureum-light/60 text-[6px] md:text-[7.5px] font-semibold uppercase tracking-widest">Tecnológico</span>
+                <button class="reveal relative group focus:outline-none rounded-xl" aria-label="Lifting Tecnológico" style="transition-delay: 0.7s;">
+                    <div class="w-[3.5rem] h-[3.5rem] min-[400px]:w-[4.2rem] min-[400px]:h-[4.2rem] sm:w-[5.5rem] sm:h-[5.5rem] md:w-32 md:h-32 rotate-45 rounded-[0.6rem] md:rounded-[1rem] diamond-beam-border p-[1px] md:p-[1.5px] shadow-[0_10px_20px_rgba(158,123,58,0.25)] group-hover:scale-105 transition-all duration-500">
+                        <div class="w-full h-full rounded-[0.5rem] md:rounded-[0.9rem] bg-aureum-dark-nude/40 backdrop-blur-xl relative flex items-center justify-center z-10">
+                            <div class="-rotate-45 flex flex-col items-center justify-center text-center w-full h-full">
+                                <span class="text-aureum-light text-[4px] min-[400px]:text-[5px] sm:text-[7px] md:text-[9.5px] font-bold uppercase tracking-[0.1em] md:tracking-[0.2em] group-hover:text-true-gold-light transition-colors">Lifting</span>
+                                <div class="w-3 sm:w-4 md:w-6 h-[1px] bg-gradient-to-r from-transparent via-[#9E7B3A] to-transparent my-0.5 md:my-1 group-hover:w-6 md:group-hover:w-8 transition-all"></div>
+                                <span class="text-aureum-light/60 text-[3.5px] min-[400px]:text-[4.5px] sm:text-[6px] md:text-[7.5px] font-semibold uppercase tracking-widest">Tecnológico</span>
                             </div>
                         </div>
                     </div>
@@ -303,12 +317,12 @@
                 </button>
             </div>
 
-            <!-- Resposta Interativa -->
+            <!-- Resposta Interativa (Ajustada com Copy "Especialista") -->
             <div id="diag-content" class="overflow-hidden transition-all duration-500 ease-out" style="opacity: 0; max-height: 0;">
                 <div class="w-16 h-[1.5px] bg-true-gold-gradient mx-auto mb-10 shadow-[0_0_8px_#FBF5B7]"></div>
                 <p id="diag-text" class="text-xl md:text-3xl font-serif italic text-aureum-dark-nude mb-12 px-4"></p>
                 <a href="#" class="inline-block px-12 md:px-20 py-6 bg-aureum-dark-nude text-aureum-light text-[10px] tracking-[0.4em] uppercase font-bold rounded-full shadow-2xl hover:bg-[#9E7B3A] transition-colors duration-500">
-                    Acesso à Agenda
+                    Falar com Especialista
                 </a>
             </div>
         </div>
@@ -331,15 +345,15 @@
         </div>
     </footer>
 
-    <!-- --- BOTÃO CONCIERGE FLUTUANTE INTEIRO (Vidro Super Translúcido) --- -->
-    <div class="fixed bottom-4 left-0 w-full px-4 z-[100] reveal" style="transition-delay: 1s;">
-        <a href="#" class="flex items-center justify-center gap-4 w-full md:max-w-sm md:mx-auto bg-aureum-dark-nude/60 backdrop-blur-2xl border border-[#9E7B3A]/40 rounded-2xl py-4 shadow-[0_10px_30px_rgba(42,26,20,0.5)] hover:scale-[1.02] transition-transform duration-300" aria-label="Falar com o Concierge">
-            <span class="relative flex h-2.5 w-2.5">
+    <!-- --- BOTÃO CONCIERGE FLUTUANTE (Lateral Inferior Direita - Falar com Especialista) --- -->
+    <div class="fixed bottom-6 right-4 md:right-8 z-[100] reveal" style="transition-delay: 1s;">
+        <a href="#diag-content" class="flex items-center justify-center gap-3 w-auto bg-aureum-dark-nude/70 backdrop-blur-2xl border border-[#9E7B3A]/40 rounded-full px-5 py-3.5 shadow-[0_15px_40px_rgba(42,26,20,0.6)] hover:scale-105 transition-transform duration-300" aria-label="Falar com Especialista">
+            <span class="relative flex h-2 w-2 md:h-2.5 md:w-2.5">
                 <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FBF5B7] opacity-75"></span>
-                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#9E7B3A]"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 md:h-2.5 md:w-2.5 bg-[#9E7B3A]"></span>
             </span>
-            <span class="text-aureum-light text-[10px] md:text-[11px] uppercase tracking-[0.4em] font-bold shimmer-true-gold">
-                Agendar Consulta
+            <span class="text-aureum-light text-[8px] md:text-[10px] uppercase tracking-[0.3em] font-bold shimmer-true-gold whitespace-nowrap">
+                Falar com Especialista
             </span>
         </a>
     </div>
