@@ -124,18 +124,18 @@
 
     <div class="luxury-grain"></div>
 
-    <!-- NAVEGAÇÃO SUPERIOR (Vidro Muito Translúcido) -->
-    <header id="navbar" class="fixed top-0 w-full z-40 transition-all duration-700 px-6 py-5 md:px-12 flex justify-between items-center bg-aureum-dark-nude/50 backdrop-blur-2xl border-b border-[#9E7B3A]/20">
-        <div class="flex flex-col text-left">
+    <!-- NAVEGAÇÃO SUPERIOR (Responsiva: Limpa no Mobile, Completa no Desktop) -->
+    <header id="navbar" class="fixed top-0 w-full z-40 transition-all duration-700 px-6 py-5 md:px-12 flex justify-center md:justify-between items-center bg-aureum-dark-nude/50 backdrop-blur-2xl border-b border-[#9E7B3A]/20">
+        <div class="hidden md:flex flex-col text-left absolute left-12">
             <span class="text-[8px] md:text-[10px] font-bold uppercase tracking-[0.3em] shimmer-true-gold">Alistair Sterling</span>
             <span class="text-[6px] md:text-[7px] uppercase tracking-widest text-aureum-light/70 font-medium mt-0.5">Medical Director</span>
         </div>
         
-        <div class="flex flex-col items-center absolute left-1/2 -translate-x-1/2">
-            <h2 class="text-2xl md:text-3xl font-serif tracking-[0.3em] leading-none text-aureum-light">AUREUM</h2>
+        <div class="flex flex-col items-center z-10">
+            <h2 class="text-3xl md:text-3xl font-serif tracking-[0.3em] leading-none text-aureum-light">AUREUM</h2>
         </div>
 
-        <div class="flex flex-col items-end text-right">
+        <div class="hidden md:flex flex-col items-end text-right absolute right-12">
             <span class="text-[8px] md:text-[10px] font-bold uppercase tracking-[0.3em] shimmer-true-gold">The</span>
             <span class="text-[6px] md:text-[7px] uppercase tracking-widest text-aureum-light/70 font-medium mt-0.5">Gold Standard</span>
         </div>
@@ -156,18 +156,18 @@
         <div class="relative z-20 w-full max-w-5xl flex flex-col items-center justify-center flex-grow px-2 md:px-6 pb-24 md:pb-16">
             
             <!-- Etiqueta Oficializando a Clínica -->
-            <span class="reveal text-aureum-dark-nude text-[8px] md:text-[11px] font-bold uppercase tracking-[0.6em] mb-4 md:mb-12">
+            <span class="reveal text-aureum-dark-nude text-[8px] md:text-[11px] font-bold uppercase tracking-[0.6em] mb-4 md:mb-12 mt-6 md:mt-0">
                 Clínica de Cosmiatria de Alta Precisão
             </span>
 
-            <!-- Título Supremo -->
-            <h1 class="reveal text-[4rem] sm:text-[6rem] md:text-[9.5rem] lg:text-[11rem] font-serif leading-[0.85] tracking-tighter text-aureum-dark-nude drop-shadow-sm" style="transition-delay: 0.1s;">
+            <!-- Título Supremo (Escala Responsiva Ajustada) -->
+            <h1 class="reveal text-[4rem] sm:text-[6rem] md:text-[9.5rem] lg:text-[10rem] xl:text-[11rem] font-serif leading-[0.85] tracking-tighter text-aureum-dark-nude drop-shadow-sm" style="transition-delay: 0.1s;">
                 Geometria <br />
                 <span class="italic shimmer-true-gold font-light">do Poder.</span>
             </h1>
 
             <!-- Subheadline Limpa -->
-            <p class="reveal text-[9px] md:text-[12px] uppercase tracking-[0.2em] leading-relaxed text-aureum-dark-nude/80 font-medium max-w-lg mt-4 md:mt-10" style="transition-delay: 0.2s;">
+            <p class="reveal text-[9px] md:text-[12px] uppercase tracking-[0.2em] leading-relaxed text-aureum-dark-nude/80 font-medium max-w-lg mt-4 md:mt-8" style="transition-delay: 0.2s;">
                 A ciência clínica que esculpe a sua autoridade. <br class="hidden md:block" /> Resultados imperceptíveis, simetria absoluta.
             </p>
 
@@ -176,8 +176,8 @@
                 Agendar Mapeamento
             </a>
 
-            <!-- OS DIAMANTES JOIA (Translucidez & Feixe de Ouro na Borda) -->
-            <div class="w-full flex flex-row flex-nowrap justify-center gap-2 min-[400px]:gap-4 sm:gap-6 md:gap-12 px-2 md:px-0 items-center mt-8 md:mt-10">
+            <!-- OS DIAMANTES JOIA (Alinhamento Responsivo Seguro para Telas Pequenas) -->
+            <div class="w-full max-w-[340px] sm:max-w-none flex flex-row flex-nowrap justify-center gap-1.5 min-[400px]:gap-3 sm:gap-6 md:gap-12 px-1 md:px-0 items-center mt-8 md:mt-10 mx-auto">
                 
                 <!-- Diamante 1 -->
                 <button class="reveal relative group focus:outline-none rounded-xl" aria-label="Modulação Muscular" style="transition-delay: 0.4s;">
@@ -413,7 +413,7 @@
                 setTimeout(() => {
                     diagText.innerText = diagnosticData[id];
                     diagContent.style.opacity = '1';
-                    diagContent.style.maxHeight = '400px'; 
+                    diagContent.style.maxHeight = '500px'; 
                 }, 300);
             });
         });
