@@ -21,13 +21,10 @@
                         sans: ['Montserrat', 'sans-serif'],
                     },
                     colors: {
-                        /* Paleta Auditada: Dark Nude & True Gold */
-                        'aureum-dark-nude': '#2A1A14', /* Deep Espresso / Mocha */
-                        'aureum-nude': '#4A3326',      /* Warm Dark Skin */
-                        'aureum-light': '#FDFCFB',     /* Pearl Ivory */
-                        'aureum-surface': '#F5EBE6',   /* Translucent Light Skin */
-                        
-                        /* Fórmula True Gold 18k */
+                        'aureum-dark-nude': '#2A1A14', 
+                        'aureum-nude': '#4A3326',      
+                        'aureum-light': '#FDFCFB',     
+                        'aureum-surface': '#F5EBE6',   
                         'true-gold-dark': '#7A5B22',
                         'true-gold-base': '#9E7B3A',
                         'true-gold-light': '#FBF5B7'
@@ -45,7 +42,6 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Efeito de Ruído (Luxury Grain) */
         .luxury-grain {
             position: fixed;
             inset: 0;
@@ -56,18 +52,12 @@
             background-image: url('https://grainy-gradients.vercel.app/noise.svg');
         }
 
-        /* Shimmer True Gold (Efeito de Reflexo de Joia Metálica) */
         @keyframes text-shimmer-gold {
             0% { background-position: -200% center; }
             100% { background-position: 200% center; }
         }
         .shimmer-true-gold {
-            background: linear-gradient(
-                to right, 
-                #7A5B22 20%, 
-                #FBF5B7 50%, 
-                #9E7B3A 80%
-            );
+            background: linear-gradient(to right, #7A5B22 20%, #FBF5B7 50%, #9E7B3A 80%);
             background-size: 200% auto;
             color: transparent;
             -webkit-background-clip: text;
@@ -75,12 +65,10 @@
             animation: text-shimmer-gold 5s linear infinite;
         }
 
-        /* Gradientes Estáticos True Gold */
         .bg-true-gold-gradient {
             background: linear-gradient(135deg, #7A5B22 0%, #FBF5B7 50%, #9E7B3A 100%);
         }
 
-        /* Animação do Feixe de Ouro no Contorno dos Diamantes */
         @keyframes border-spin {
             0% { transform: translate(-50%, -50%) rotate(0deg); }
             100% { transform: translate(-50%, -50%) rotate(360deg); }
@@ -96,14 +84,12 @@
             left: 50%;
             width: 300%;
             height: 300%;
-            /* Ouro base com um foco denso de luz brilhante (Feixe Ouro 18k) */
             background: conic-gradient(from 0deg, #7A5B22 0%, #9E7B3A 20%, #7A5B22 40%, #7A5B22 70%, #FBF5B7 90%, #7A5B22 100%);
             animation: border-spin 3.5s linear infinite;
             transform-origin: center;
             z-index: 0;
         }
 
-        /* Efeitos de Revelação de Alta Performance (Intersection Observer) */
         .reveal {
             opacity: 0;
             transform: translateY(20px);
@@ -114,120 +100,122 @@
             transform: translateY(0);
         }
 
-        /* Scroll Horizontal Oculto para Mobile (Diamantes) */
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
+        .diamond-reflection {
+            transform: translateX(-150%) translateY(-50%) rotate(-45deg);
+            transition: transform 1.5s ease-in-out;
+        }
+        .group:hover .diamond-reflection {
+            transform: translateX(150%) translateY(50%) rotate(-45deg);
+        }
     </style>
 </head>
 <body>
 
     <div class="luxury-grain"></div>
 
-    <!-- NAVEGAÇÃO SUPERIOR (Responsiva: Limpa no Mobile, Completa no Desktop) -->
-    <header id="navbar" class="fixed top-0 w-full z-40 transition-all duration-700 px-6 py-5 md:px-12 flex justify-center md:justify-between items-center bg-aureum-dark-nude/50 backdrop-blur-2xl border-b border-[#9E7B3A]/20">
-        <div class="hidden md:flex flex-col text-left absolute left-12">
+    <!-- NAVEGAÇÃO SUPERIOR -->
+    <header id="navbar" class="fixed top-0 w-full z-40 transition-all duration-700 px-6 py-6 md:px-12 flex justify-between items-center bg-aureum-dark-nude/50 backdrop-blur-2xl border-b border-[#9E7B3A]/20">
+        <div class="flex flex-col text-left">
             <span class="text-[8px] md:text-[10px] font-bold uppercase tracking-[0.3em] shimmer-true-gold">Alistair Sterling</span>
             <span class="text-[6px] md:text-[7px] uppercase tracking-widest text-aureum-light/70 font-medium mt-0.5">Medical Director</span>
         </div>
         
-        <div class="flex flex-col items-center z-10">
-            <h2 class="text-3xl md:text-3xl font-serif tracking-[0.3em] leading-none text-aureum-light">AUREUM</h2>
+        <div class="flex flex-col items-center absolute left-1/2 -translate-x-1/2">
+            <h2 class="text-2xl md:text-3xl font-serif tracking-[0.3em] leading-none text-aureum-light">AUREUM</h2>
         </div>
 
-        <div class="hidden md:flex flex-col items-end text-right absolute right-12">
+        <div class="flex flex-col items-end text-right">
             <span class="text-[8px] md:text-[10px] font-bold uppercase tracking-[0.3em] shimmer-true-gold">The</span>
             <span class="text-[6px] md:text-[7px] uppercase tracking-widest text-aureum-light/70 font-medium mt-0.5">Gold Standard</span>
         </div>
     </header>
 
-    <!-- 1. HERO SECTION: MINIMALISMO & PRECISÃO -->
-    <section class="relative min-h-[100svh] flex flex-col items-center justify-center px-0 text-center overflow-hidden pt-20 md:pt-32 bg-aureum-surface">
+    <!-- 1. HERO SECTION: REFINAMENTO DE RESPIROS -->
+    <section class="relative min-h-[100svh] flex flex-col items-center justify-center px-0 text-center overflow-hidden pt-32 md:pt-40 bg-aureum-surface">
         
-        <!-- Fotografia de Fundo (Pele e Geometria) -->
-        <div id="hero-bg" class="absolute bottom-0 w-full h-full flex items-center justify-center z-0 transition-transform duration-100 ease-out p-3 md:p-6 opacity-80">
-            <div class="relative w-full h-full rounded-[2rem] md:rounded-[3rem] overflow-hidden shadow-2xl border border-white/60">
-                <div class="absolute inset-0 bg-gradient-to-b from-aureum-surface/60 via-aureum-surface/20 to-aureum-surface/90 z-10"></div>
-                <div class="w-full h-full bg-cover bg-center mix-blend-multiply opacity-60" style="background-image: url('https://images.unsplash.com/photo-1616391182219-a080b4d1043a?q=80&w=1374&auto=format&fit=crop');" role="img" aria-label="Geometria facial clínica, luz dramática"></div>
-            </div>
+        <!-- Fotografia de Fundo (Clara) -->
+        <div id="hero-bg" class="absolute inset-0 w-full h-full flex items-center justify-center z-0 transition-transform duration-100 ease-out opacity-80">
+            <div class="absolute inset-0 bg-gradient-to-b from-aureum-surface/80 via-aureum-surface/40 to-aureum-surface/90 z-10"></div>
+            <div class="w-full h-full bg-cover bg-center mix-blend-multiply opacity-50" style="background-image: url('https://images.unsplash.com/photo-1616391182219-a080b4d1043a?q=80&w=1374&auto=format&fit=crop');" role="img" aria-label="Geometria facial clínica, luz dramática"></div>
         </div>
 
-        <!-- Conteúdo Minimalista Seguro -->
-        <div class="relative z-20 w-full max-w-5xl flex flex-col items-center justify-center flex-grow px-2 md:px-6 pb-24 md:pb-16">
+        <!-- Conteúdo Minimalista (Hierarquia com Respiro) -->
+        <div class="relative z-20 w-full max-w-5xl flex flex-col items-center justify-start flex-grow px-4 md:px-6 pb-20 md:pb-24">
             
-            <!-- Etiqueta Oficializando a Clínica -->
-            <span class="reveal text-aureum-dark-nude text-[8px] md:text-[11px] font-bold uppercase tracking-[0.6em] mb-4 md:mb-12 mt-6 md:mt-0">
-                Clínica de Cosmiatria de Alta Precisão
-            </span>
-
-            <!-- Título Supremo (Escala Responsiva Ajustada) -->
-            <h1 class="reveal text-[4rem] sm:text-[6rem] md:text-[9.5rem] lg:text-[10rem] xl:text-[11rem] font-serif leading-[0.85] tracking-tighter text-aureum-dark-nude drop-shadow-sm" style="transition-delay: 0.1s;">
+            <!-- Título Supremo (Geometria do Poder) com mais espaço vertical -->
+            <h1 class="reveal text-[4.2rem] sm:text-[6rem] md:text-[9.5rem] lg:text-[11rem] font-serif leading-[0.9] tracking-tighter text-aureum-dark-nude drop-shadow-sm mb-10 md:mb-16" style="transition-delay: 0.1s;">
                 Geometria <br />
                 <span class="italic shimmer-true-gold font-light">do Poder.</span>
             </h1>
 
+            <!-- Etiqueta Clínica (Descida com respiro) -->
+            <span class="reveal text-aureum-dark-nude text-[9px] md:text-[11px] font-bold uppercase tracking-[0.5em] mb-4 md:mb-6" style="transition-delay: 0.2s;">
+                Clínica de Cosmiatria de Alta Precisão
+            </span>
+
             <!-- Subheadline Limpa -->
-            <p class="reveal text-[9px] md:text-[12px] uppercase tracking-[0.2em] leading-relaxed text-aureum-dark-nude/80 font-medium max-w-lg mt-4 md:mt-8" style="transition-delay: 0.2s;">
+            <p class="reveal text-[10px] md:text-[12px] uppercase tracking-[0.2em] leading-relaxed text-aureum-dark-nude/70 font-medium max-w-md" style="transition-delay: 0.3s;">
                 A ciência clínica que esculpe a sua autoridade. <br class="hidden md:block" /> Resultados imperceptíveis, simetria absoluta.
             </p>
 
-            <!-- NOVO CTA DE FUNIL NO HERO (Ação Imediata para Conversão) -->
-            <a href="#diag-content" class="reveal mt-6 md:mt-10 inline-flex items-center justify-center px-8 py-3 md:px-10 md:py-4 border border-[#9E7B3A]/50 bg-aureum-dark-nude/10 backdrop-blur-md text-aureum-dark-nude text-[8px] md:text-[10px] uppercase tracking-[0.3em] font-bold rounded-full hover:bg-aureum-dark-nude hover:text-[#FBF5B7] hover:border-aureum-dark-nude transition-all duration-500 shadow-lg hover:shadow-xl" style="transition-delay: 0.3s;">
+            <!-- NOVO CTA (Descido mais para baixo para dar respiro ao texto) -->
+            <a href="#diag-content" class="reveal mt-12 md:mt-16 inline-flex items-center justify-center px-10 py-4 border border-aureum-dark-nude/30 text-aureum-dark-nude text-[9px] uppercase tracking-[0.4em] font-bold rounded-full hover:bg-aureum-dark-nude hover:text-[#FBF5B7] hover:border-aureum-dark-nude transition-all duration-500" style="transition-delay: 0.4s;">
                 Agendar Mapeamento
             </a>
 
-            <!-- OS DIAMANTES JOIA (Alinhamento Responsivo Seguro para Telas Pequenas) -->
-            <div class="w-full max-w-[340px] sm:max-w-none flex flex-row flex-nowrap justify-center gap-1.5 min-[400px]:gap-3 sm:gap-6 md:gap-12 px-1 md:px-0 items-center mt-8 md:mt-10 mx-auto">
+            <!-- OS DIAMANTES JOIA (GRID 2x2 no Mobile com espaçamento generoso) -->
+            <div class="w-full max-w-[320px] md:max-w-none grid grid-cols-2 md:flex md:flex-row justify-center gap-x-8 gap-y-12 sm:gap-x-12 sm:gap-y-14 md:gap-14 px-4 md:px-0 mt-20 md:mt-24 mx-auto">
                 
                 <!-- Diamante 1 -->
-                <button class="reveal relative group focus:outline-none rounded-xl" aria-label="Modulação Muscular" style="transition-delay: 0.4s;">
-                    <!-- Borda Animada (Feixe de Ouro Girando) -->
-                    <div class="w-[3.5rem] h-[3.5rem] min-[400px]:w-[4.2rem] min-[400px]:h-[4.2rem] sm:w-[5.5rem] sm:h-[5.5rem] md:w-32 md:h-32 rotate-45 rounded-[0.6rem] md:rounded-[1rem] diamond-beam-border p-[1px] md:p-[1.5px] shadow-[0_10px_20px_rgba(158,123,58,0.25)] group-hover:scale-105 transition-all duration-500">
-                        <!-- Núcleo Translúcido (Sem efeito interno, fundo esfumaçado vaza) -->
-                        <div class="w-full h-full rounded-[0.5rem] md:rounded-[0.9rem] bg-aureum-dark-nude/40 backdrop-blur-xl relative flex items-center justify-center z-10">
+                <button class="reveal relative group focus:outline-none rounded-xl mx-auto" aria-label="Modulação Muscular" style="transition-delay: 0.5s;">
+                    <div class="w-[5.8rem] h-[5.5rem] md:w-32 md:h-32 rotate-45 rounded-[0.8rem] md:rounded-[1rem] diamond-beam-border p-[1px] md:p-[1.5px] shadow-[0_12px_25px_rgba(158,123,58,0.15)] group-hover:scale-105 transition-all duration-500">
+                        <div class="w-full h-full rounded-[0.7rem] md:rounded-[0.9rem] bg-aureum-dark-nude/40 backdrop-blur-xl relative flex items-center justify-center z-10">
                             <div class="-rotate-45 flex flex-col items-center justify-center text-center w-full h-full">
-                                <span class="text-aureum-light text-[4px] min-[400px]:text-[5px] sm:text-[7px] md:text-[9.5px] font-bold uppercase tracking-[0.1em] md:tracking-[0.2em] group-hover:text-true-gold-light transition-colors">Modulação</span>
-                                <div class="w-3 sm:w-4 md:w-6 h-[1px] bg-gradient-to-r from-transparent via-[#9E7B3A] to-transparent my-0.5 md:my-1 group-hover:w-6 md:group-hover:w-8 transition-all"></div>
-                                <span class="text-aureum-light/60 text-[3.5px] min-[400px]:text-[4.5px] sm:text-[6px] md:text-[7.5px] font-semibold uppercase tracking-widest">Muscular</span>
+                                <span class="text-aureum-light text-[7px] md:text-[9.5px] font-bold uppercase tracking-[0.2em] group-hover:text-true-gold-light transition-colors">Modulação</span>
+                                <div class="w-4 md:w-6 h-[1px] bg-gradient-to-r from-transparent via-[#9E7B3A] to-transparent my-1 group-hover:w-8 transition-all"></div>
+                                <span class="text-aureum-light/60 text-[6px] md:text-[7.5px] font-semibold uppercase tracking-widest">Muscular</span>
                             </div>
                         </div>
                     </div>
                 </button>
 
                 <!-- Diamante 2 -->
-                <button class="reveal relative group focus:outline-none rounded-xl" aria-label="Arquitetura Facial" style="transition-delay: 0.5s;">
-                    <div class="w-[3.5rem] h-[3.5rem] min-[400px]:w-[4.2rem] min-[400px]:h-[4.2rem] sm:w-[5.5rem] sm:h-[5.5rem] md:w-32 md:h-32 rotate-45 rounded-[0.6rem] md:rounded-[1rem] diamond-beam-border p-[1px] md:p-[1.5px] shadow-[0_10px_20px_rgba(158,123,58,0.25)] group-hover:scale-105 transition-all duration-500">
-                        <div class="w-full h-full rounded-[0.5rem] md:rounded-[0.9rem] bg-aureum-dark-nude/40 backdrop-blur-xl relative flex items-center justify-center z-10">
+                <button class="reveal relative group focus:outline-none rounded-xl mx-auto" aria-label="Arquitetura Facial" style="transition-delay: 0.6s;">
+                    <div class="w-[5.8rem] h-[5.5rem] md:w-32 md:h-32 rotate-45 rounded-[0.8rem] md:rounded-[1rem] diamond-beam-border p-[1px] md:p-[1.5px] shadow-[0_12px_25px_rgba(158,123,58,0.15)] group-hover:scale-105 transition-all duration-500">
+                        <div class="w-full h-full rounded-[0.7rem] md:rounded-[0.9rem] bg-aureum-dark-nude/40 backdrop-blur-xl relative flex items-center justify-center z-10">
                             <div class="-rotate-45 flex flex-col items-center justify-center text-center w-full h-full">
-                                <span class="text-aureum-light text-[4px] min-[400px]:text-[5px] sm:text-[7px] md:text-[9.5px] font-bold uppercase tracking-[0.1em] md:tracking-[0.2em] group-hover:text-true-gold-light transition-colors">Arquitetura</span>
-                                <div class="w-3 sm:w-4 md:w-6 h-[1px] bg-gradient-to-r from-transparent via-[#9E7B3A] to-transparent my-0.5 md:my-1 group-hover:w-6 md:group-hover:w-8 transition-all"></div>
-                                <span class="text-aureum-light/60 text-[3.5px] min-[400px]:text-[4.5px] sm:text-[6px] md:text-[7.5px] font-semibold uppercase tracking-widest">Facial</span>
+                                <span class="text-aureum-light text-[7px] md:text-[9.5px] font-bold uppercase tracking-[0.2em] group-hover:text-true-gold-light transition-colors">Arquitetura</span>
+                                <div class="w-4 md:w-6 h-[1px] bg-gradient-to-r from-transparent via-[#9E7B3A] to-transparent my-1 group-hover:w-8 transition-all"></div>
+                                <span class="text-aureum-light/60 text-[6px] md:text-[7.5px] font-semibold uppercase tracking-widest">Facial</span>
                             </div>
                         </div>
                     </div>
                 </button>
 
                 <!-- Diamante 3 -->
-                <button class="reveal relative group focus:outline-none rounded-xl" aria-label="Bioestímulo Profundo" style="transition-delay: 0.6s;">
-                    <div class="w-[3.5rem] h-[3.5rem] min-[400px]:w-[4.2rem] min-[400px]:h-[4.2rem] sm:w-[5.5rem] sm:h-[5.5rem] md:w-32 md:h-32 rotate-45 rounded-[0.6rem] md:rounded-[1rem] diamond-beam-border p-[1px] md:p-[1.5px] shadow-[0_10px_20px_rgba(158,123,58,0.25)] group-hover:scale-105 transition-all duration-500">
-                        <div class="w-full h-full rounded-[0.5rem] md:rounded-[0.9rem] bg-aureum-dark-nude/40 backdrop-blur-xl relative flex items-center justify-center z-10">
+                <button class="reveal relative group focus:outline-none rounded-xl mx-auto" aria-label="Bioestímulo Profundo" style="transition-delay: 0.7s;">
+                    <div class="w-[5.8rem] h-[5.5rem] md:w-32 md:h-32 rotate-45 rounded-[0.8rem] md:rounded-[1rem] diamond-beam-border p-[1px] md:p-[1.5px] shadow-[0_12px_25px_rgba(158,123,58,0.15)] group-hover:scale-105 transition-all duration-500">
+                        <div class="w-full h-full rounded-[0.7rem] md:rounded-[0.9rem] bg-aureum-dark-nude/40 backdrop-blur-xl relative flex items-center justify-center z-10">
                             <div class="-rotate-45 flex flex-col items-center justify-center text-center w-full h-full">
-                                <span class="text-aureum-light text-[4px] min-[400px]:text-[5px] sm:text-[7px] md:text-[9.5px] font-bold uppercase tracking-[0.1em] md:tracking-[0.2em] group-hover:text-true-gold-light transition-colors">Bioestímulo</span>
-                                <div class="w-3 sm:w-4 md:w-6 h-[1px] bg-gradient-to-r from-transparent via-[#9E7B3A] to-transparent my-0.5 md:my-1 group-hover:w-6 md:group-hover:w-8 transition-all"></div>
-                                <span class="text-aureum-light/60 text-[3.5px] min-[400px]:text-[4.5px] sm:text-[6px] md:text-[7.5px] font-semibold uppercase tracking-widest">Profundo</span>
+                                <span class="text-aureum-light text-[7px] md:text-[9.5px] font-bold uppercase tracking-[0.2em] group-hover:text-true-gold-light transition-colors">Bioestímulo</span>
+                                <div class="w-4 md:w-6 h-[1px] bg-gradient-to-r from-transparent via-[#9E7B3A] to-transparent my-1 group-hover:w-8 transition-all"></div>
+                                <span class="text-aureum-light/60 text-[6px] md:text-[7.5px] font-semibold uppercase tracking-widest">Profundo</span>
                             </div>
                         </div>
                     </div>
                 </button>
 
                 <!-- Diamante 4 -->
-                <button class="reveal relative group focus:outline-none rounded-xl" aria-label="Lifting Tecnológico" style="transition-delay: 0.7s;">
-                    <div class="w-[3.5rem] h-[3.5rem] min-[400px]:w-[4.2rem] min-[400px]:h-[4.2rem] sm:w-[5.5rem] sm:h-[5.5rem] md:w-32 md:h-32 rotate-45 rounded-[0.6rem] md:rounded-[1rem] diamond-beam-border p-[1px] md:p-[1.5px] shadow-[0_10px_20px_rgba(158,123,58,0.25)] group-hover:scale-105 transition-all duration-500">
-                        <div class="w-full h-full rounded-[0.5rem] md:rounded-[0.9rem] bg-aureum-dark-nude/40 backdrop-blur-xl relative flex items-center justify-center z-10">
+                <button class="reveal relative group focus:outline-none rounded-xl mx-auto" aria-label="Lifting Tecnológico" style="transition-delay: 0.8s;">
+                    <div class="w-[5.8rem] h-[5.5rem] md:w-32 md:h-32 rotate-45 rounded-[0.8rem] md:rounded-[1rem] diamond-beam-border p-[1px] md:p-[1.5px] shadow-[0_12px_25px_rgba(158,123,58,0.15)] group-hover:scale-105 transition-all duration-500">
+                        <div class="w-full h-full rounded-[0.7rem] md:rounded-[0.9rem] bg-aureum-dark-nude/40 backdrop-blur-xl relative flex items-center justify-center z-10">
                             <div class="-rotate-45 flex flex-col items-center justify-center text-center w-full h-full">
-                                <span class="text-aureum-light text-[4px] min-[400px]:text-[5px] sm:text-[7px] md:text-[9.5px] font-bold uppercase tracking-[0.1em] md:tracking-[0.2em] group-hover:text-true-gold-light transition-colors">Lifting</span>
-                                <div class="w-3 sm:w-4 md:w-6 h-[1px] bg-gradient-to-r from-transparent via-[#9E7B3A] to-transparent my-0.5 md:my-1 group-hover:w-6 md:group-hover:w-8 transition-all"></div>
-                                <span class="text-aureum-light/60 text-[3.5px] min-[400px]:text-[4.5px] sm:text-[6px] md:text-[7.5px] font-semibold uppercase tracking-widest">Tecnológico</span>
+                                <span class="text-aureum-light text-[7px] md:text-[9.5px] font-bold uppercase tracking-[0.2em] group-hover:text-true-gold-light transition-colors">Lifting</span>
+                                <div class="w-4 md:w-6 h-[1px] bg-gradient-to-r from-transparent via-[#9E7B3A] to-transparent my-1 group-hover:w-8 transition-all"></div>
+                                <span class="text-aureum-light/60 text-[6px] md:text-[7.5px] font-semibold uppercase tracking-widest">Tecnológico</span>
                             </div>
                         </div>
                     </div>
@@ -317,7 +305,7 @@
                 </button>
             </div>
 
-            <!-- Resposta Interativa (Ajustada com Copy "Especialista") -->
+            <!-- Resposta Interativa -->
             <div id="diag-content" class="overflow-hidden transition-all duration-500 ease-out" style="opacity: 0; max-height: 0;">
                 <div class="w-16 h-[1.5px] bg-true-gold-gradient mx-auto mb-10 shadow-[0_0_8px_#FBF5B7]"></div>
                 <p id="diag-text" class="text-xl md:text-3xl font-serif italic text-aureum-dark-nude mb-12 px-4"></p>
@@ -360,14 +348,11 @@
 
     <!-- SCRIPTS VANILLA -->
     <script>
-        // 1. Efeito Navbar e Parallax Simple
         const navbar = document.getElementById('navbar');
         const heroBg = document.getElementById('hero-bg');
 
         window.addEventListener('scroll', () => {
             const y = window.scrollY;
-            
-            // Navbar Shadow e Adaptação de Translucidez
             if (y > 20) {
                 navbar.classList.remove('py-6', 'md:py-8', 'bg-aureum-dark-nude/50');
                 navbar.classList.add('py-3', 'shadow-[0_15px_40px_rgba(42,26,20,0.2)]', 'bg-aureum-dark-nude/80');
@@ -375,14 +360,11 @@
                 navbar.classList.add('py-6', 'md:py-8', 'bg-aureum-dark-nude/50');
                 navbar.classList.remove('py-3', 'shadow-[0_15px_40px_rgba(42,26,20,0.2)]', 'bg-aureum-dark-nude/80');
             }
-
-            // Hero Portal Parallax
             if(y < window.innerHeight && heroBg) {
                 heroBg.style.transform = `translateY(${y * 0.15}px)`;
             }
         });
 
-        // 2. Lógica do Diagnóstico Interativo
         const diagBtns = document.querySelectorAll('.diag-btn');
         const diagContent = document.getElementById('diag-content');
         const diagText = document.getElementById('diag-text');
@@ -396,29 +378,25 @@
         diagBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 const id = btn.getAttribute('data-id');
-                
                 diagBtns.forEach(b => {
                     b.classList.remove('bg-aureum-dark-nude', 'text-white', 'border-[#9E7B3A]');
                     b.classList.add('bg-white', 'text-aureum-dark-nude', 'border-[#9E7B3A]/20');
                     b.querySelector('span:first-child').classList.remove('opacity-100', 'shimmer-true-gold');
                     b.querySelector('span:first-child').classList.add('opacity-40');
                 });
-
                 btn.classList.add('bg-aureum-dark-nude', 'text-white', 'border-[#9E7B3A]');
                 btn.classList.remove('bg-white', 'text-aureum-dark-nude', 'border-[#9E7B3A]/20');
                 btn.querySelector('span:first-child').classList.add('opacity-100', 'shimmer-true-gold');
                 btn.querySelector('span:first-child').classList.remove('opacity-40');
-
                 diagContent.style.opacity = '0';
                 setTimeout(() => {
                     diagText.innerText = diagnosticData[id];
                     diagContent.style.opacity = '1';
-                    diagContent.style.maxHeight = '500px'; 
+                    diagContent.style.maxHeight = '400px'; 
                 }, 300);
             });
         });
 
-        // 3. Scroll Reveal (Animações CSS nativas)
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -429,8 +407,6 @@
         }, { threshold: 0.1 });
 
         document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
-        
-        // Revelação imediata da primeira dobra
         setTimeout(() => document.querySelectorAll('.reveal').forEach(el => {
             if(el.getBoundingClientRect().top < window.innerHeight) el.classList.add('active');
         }), 100);
