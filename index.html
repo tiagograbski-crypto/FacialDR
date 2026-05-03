@@ -97,30 +97,30 @@
 </head>
 <body class="antialiased">
 
-    <!-- 1. NAVEGAÇÃO SUPERIOR (Sempre visível desde o segundo zero, efeito Glassmorphism ampliado) -->
-    <header id="navbar" class="fixed top-0 w-full z-50 px-4 md:px-12 py-5 md:py-6 flex justify-between items-center bg-aureum-taupe/40 backdrop-blur-lg transition-all duration-500">
+    <!-- 1. NAVEGAÇÃO SUPERIOR (Mais Alta e Tipografia Legível no Mobile) -->
+    <header id="navbar" class="fixed top-0 w-full z-50 px-4 md:px-12 pt-6 pb-5 md:py-8 flex justify-between items-center bg-transparent transition-all duration-500">
         
         <!-- Bloco Esquerdo -->
         <div class="flex flex-col text-left w-1/3 z-10">
-            <span class="text-[clamp(5.5px,1.2vw,9px)] font-bold uppercase tracking-[0.2em] shimmer-true-gold">Alistair Sterling</span>
-            <span class="text-[clamp(5px,1vw,7px)] uppercase tracking-widest text-white/90 mt-0.5">Clínica Facial</span>
+            <span class="text-[9px] sm:text-[10px] md:text-[11px] font-bold uppercase tracking-[0.2em] shimmer-true-gold">Alistair Sterling</span>
+            <span class="text-[7px] sm:text-[8px] md:text-[9px] uppercase tracking-widest text-white/90 mt-0.5">Clínica Facial</span>
         </div>
         
         <!-- Bloco Central -->
         <div class="absolute left-1/2 -translate-x-1/2 flex flex-col items-center z-10 w-1/3">
-            <h2 class="text-[clamp(1.25rem,3vw,1.875rem)] font-serif tracking-[0.3em] leading-none text-white">AUREUM</h2>
+            <h2 class="text-2xl md:text-3xl font-serif tracking-[0.3em] leading-none text-white">AUREUM</h2>
         </div>
 
         <!-- Bloco Direito -->
         <div class="flex flex-col items-end text-right w-1/3 z-10">
-            <span class="text-[clamp(5.5px,1.2vw,9px)] font-bold uppercase tracking-[0.2em] shimmer-true-gold">Padrão</span>
-            <span class="text-[clamp(5px,1vw,7px)] uppercase tracking-widest text-white/90 mt-0.5">Alta Cosmiatria</span>
+            <span class="text-[9px] sm:text-[10px] md:text-[11px] font-bold uppercase tracking-[0.2em] shimmer-true-gold">Padrão</span>
+            <span class="text-[7px] sm:text-[8px] md:text-[9px] uppercase tracking-widest text-white/90 mt-0.5">Alta Cosmiatria</span>
         </div>
     </header>
 
-    <!-- 2. HERO SECTION (Engenharia Espacial Justify-Between + Tipografia Fluida) -->
+    <!-- 2. HERO SECTION (Tipografia Ajustada e Legível) -->
     <section class="relative min-h-[100svh] flex flex-col bg-aureum-light">
-        <div class="relative w-full flex flex-col items-center pt-[90px] md:pt-[120px] pb-6 md:pb-10 flex-grow z-20">
+        <div class="relative w-full flex flex-col items-center pt-[100px] md:pt-[130px] pb-6 md:pb-10 flex-grow z-20">
             
             <!-- Imagem de Fundo c/ Blend Estratégico -->
             <div class="absolute inset-0 w-full h-full z-0">
@@ -128,25 +128,25 @@
                 <div class="absolute inset-0 bg-gradient-to-b from-aureum-light/10 via-aureum-light/50 to-aureum-light"></div>
             </div>
 
-            <!-- Corpo do Hero: Ocupa 100% da altura restante, distribuindo topo, meio e base -->
-            <div class="relative z-20 w-full max-w-5xl flex flex-col items-center justify-between flex-grow px-4 md:px-6 h-full min-h-[calc(100svh-130px)]">
+            <!-- Corpo do Hero -->
+            <div class="relative z-20 w-full max-w-5xl flex flex-col items-center justify-between flex-grow px-0 md:px-6 h-full min-h-[calc(100svh-130px)]">
                 
-                <!-- BLOCO TOPO: Títulos ancorados no alto -->
-                <div class="flex flex-col items-center w-full pt-4 md:pt-10">
-                    <span class="reveal text-[clamp(0.45rem,1.5vw,0.65rem)] font-bold uppercase tracking-[0.4em] mb-4 md:mb-8 text-center text-aureum-dark">
+                <!-- BLOCO TOPO -->
+                <div class="flex flex-col items-center w-full pt-8 md:pt-10 px-4">
+                    <span class="reveal text-[9px] md:text-[11px] font-bold uppercase tracking-[0.4em] mb-6 md:mb-8 text-center text-aureum-dark/80">
                         Clínica de Cosmiatria de Alta Precisão
                     </span>
-                    <h1 class="reveal flex flex-col items-center text-center font-serif text-[clamp(3.8rem,14vw,9.5rem)] leading-[0.8] tracking-tighter text-aureum-dark" style="transition-delay: 0.1s;">
+                    <h1 class="reveal flex flex-col items-center text-center font-serif text-[4.5rem] sm:text-[6rem] md:text-[9.5rem] leading-[0.85] tracking-tighter text-aureum-dark" style="transition-delay: 0.1s;">
                         <span>Geometria</span>
                         <span class="italic text-gradient-gold font-light mt-1 md:mt-2">do Poder.</span>
                     </h1>
                 </div>
 
-                <!-- BLOCO MEIO: Os 4 Módulos Semânticos (Presos ao centro dinâmico usando my-auto) -->
-                <div class="reveal w-full max-w-full px-1 min-[380px]:px-2 md:max-w-4xl grid grid-cols-4 gap-1.5 min-[380px]:gap-2 sm:gap-4 md:gap-6 my-auto" style="transition-delay: 0.2s;">
+                <!-- BLOCO MEIO: Cartões -->
+                <div class="reveal w-full max-w-full md:max-w-4xl flex overflow-x-auto hide-scrollbar snap-x snap-mandatory gap-3 px-4 md:px-0 md:grid md:grid-cols-4 md:gap-6 my-auto py-4" style="transition-delay: 0.2s;">
                     
                     <!-- 1. Modulação -->
-                    <div class="relative w-full h-[clamp(4.5rem,15vw,6rem)] bg-aureum-diamond rounded-lg md:rounded-xl border border-[#EAD49E]/20 overflow-hidden flex flex-col justify-center items-center group shadow-md hover:shadow-[0_10px_25px_rgba(58,42,32,0.4)] transition-all duration-500 hover:-translate-y-1 cursor-pointer">
+                    <div class="relative flex-none w-[42%] min-[400px]:w-[35%] md:w-full h-[5.5rem] md:h-[6.5rem] snap-center bg-aureum-diamond rounded-xl md:rounded-2xl border border-[#EAD49E]/20 overflow-hidden flex flex-col justify-center items-center group shadow-lg hover:shadow-[0_10px_25px_rgba(58,42,32,0.4)] transition-all duration-500 hover:-translate-y-1 cursor-pointer">
                         <div class="absolute inset-0 opacity-20 group-hover:opacity-60 transition-opacity duration-700 z-0">
                             <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
                                 <line x1="10" y1="40" x2="90" y2="40" stroke="#EAD49E" stroke-width="0.2" class="opacity-40" />
@@ -156,12 +156,12 @@
                                 <circle cx="65" cy="50" r="1.5" fill="#EAD49E" class="animate-pulse" style="animation-delay: 1s;" />
                             </svg>
                         </div>
-                        <span class="relative z-10 text-[#EAD49E] text-[clamp(0.35rem,1.5vw,0.6rem)] font-bold uppercase tracking-[0.1em] md:tracking-[0.15em] text-center transition-colors group-hover:text-white px-0.5">Modulação</span>
-                        <span class="relative z-10 text-white/80 text-[clamp(0.3rem,1.2vw,0.45rem)] font-semibold uppercase tracking-widest text-center mt-0.5">Muscular</span>
+                        <span class="relative z-10 text-[#EAD49E] text-[8px] md:text-[10px] font-bold uppercase tracking-[0.15em] text-center transition-colors group-hover:text-white px-1">Modulação</span>
+                        <span class="relative z-10 text-white/80 text-[6.5px] md:text-[7.5px] font-semibold uppercase tracking-widest text-center mt-1">Muscular</span>
                     </div>
 
                     <!-- 2. Arquitetura -->
-                    <div class="relative w-full h-[clamp(4.5rem,15vw,6rem)] bg-aureum-diamond rounded-lg md:rounded-xl border border-[#EAD49E]/20 overflow-hidden flex flex-col justify-center items-center group shadow-md hover:shadow-[0_10px_25px_rgba(58,42,32,0.4)] transition-all duration-500 hover:-translate-y-1 cursor-pointer">
+                    <div class="relative flex-none w-[42%] min-[400px]:w-[35%] md:w-full h-[5.5rem] md:h-[6.5rem] snap-center bg-aureum-diamond rounded-xl md:rounded-2xl border border-[#EAD49E]/20 overflow-hidden flex flex-col justify-center items-center group shadow-lg hover:shadow-[0_10px_25px_rgba(58,42,32,0.4)] transition-all duration-500 hover:-translate-y-1 cursor-pointer">
                         <div class="absolute inset-0 opacity-20 group-hover:opacity-60 transition-opacity duration-700 z-0">
                             <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
                                 <path d="M 15 30 L 15 15 L 30 15" fill="none" stroke="#D4AF37" stroke-width="0.5" />
@@ -171,12 +171,12 @@
                                 <line x1="15" y1="50" x2="85" y2="50" stroke="#EAD49E" stroke-width="0.2" stroke-dasharray="2 2" />
                             </svg>
                         </div>
-                        <span class="relative z-10 text-[#EAD49E] text-[clamp(0.35rem,1.5vw,0.6rem)] font-bold uppercase tracking-[0.1em] md:tracking-[0.15em] text-center transition-colors group-hover:text-white px-0.5">Arquitetura</span>
-                        <span class="relative z-10 text-white/80 text-[clamp(0.3rem,1.2vw,0.45rem)] font-semibold uppercase tracking-widest text-center mt-0.5">Facial</span>
+                        <span class="relative z-10 text-[#EAD49E] text-[8px] md:text-[10px] font-bold uppercase tracking-[0.15em] text-center transition-colors group-hover:text-white px-1">Arquitetura</span>
+                        <span class="relative z-10 text-white/80 text-[6.5px] md:text-[7.5px] font-semibold uppercase tracking-widest text-center mt-1">Facial</span>
                     </div>
 
                     <!-- 3. Bioestímulo -->
-                    <div class="relative w-full h-[clamp(4.5rem,15vw,6rem)] bg-aureum-diamond rounded-lg md:rounded-xl border border-[#EAD49E]/20 overflow-hidden flex flex-col justify-center items-center group shadow-md hover:shadow-[0_10px_25px_rgba(58,42,32,0.4)] transition-all duration-500 hover:-translate-y-1 cursor-pointer">
+                    <div class="relative flex-none w-[42%] min-[400px]:w-[35%] md:w-full h-[5.5rem] md:h-[6.5rem] snap-center bg-aureum-diamond rounded-xl md:rounded-2xl border border-[#EAD49E]/20 overflow-hidden flex flex-col justify-center items-center group shadow-lg hover:shadow-[0_10px_25px_rgba(58,42,32,0.4)] transition-all duration-500 hover:-translate-y-1 cursor-pointer">
                         <div class="absolute inset-0 opacity-20 group-hover:opacity-60 transition-opacity duration-700 z-0">
                             <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
                                 <defs>
@@ -191,12 +191,12 @@
                                 <circle cx="70" cy="30" r="1" fill="#D4AF37" class="animate-pulse" style="animation-delay: 0.8s"/>
                             </svg>
                         </div>
-                        <span class="relative z-10 text-[#EAD49E] text-[clamp(0.35rem,1.5vw,0.6rem)] font-bold uppercase tracking-[0.1em] md:tracking-[0.15em] text-center transition-colors group-hover:text-white px-0.5">Bioestímulo</span>
-                        <span class="relative z-10 text-white/80 text-[clamp(0.3rem,1.2vw,0.45rem)] font-semibold uppercase tracking-widest text-center mt-0.5">Profundo</span>
+                        <span class="relative z-10 text-[#EAD49E] text-[8px] md:text-[10px] font-bold uppercase tracking-[0.15em] text-center transition-colors group-hover:text-white px-1">Bioestímulo</span>
+                        <span class="relative z-10 text-white/80 text-[6.5px] md:text-[7.5px] font-semibold uppercase tracking-widest text-center mt-1">Profundo</span>
                     </div>
 
                     <!-- 4. Lifting -->
-                    <div class="relative w-full h-[clamp(4.5rem,15vw,6rem)] bg-aureum-diamond rounded-lg md:rounded-xl border border-[#EAD49E]/20 overflow-hidden flex flex-col justify-center items-center group shadow-md hover:shadow-[0_10px_25px_rgba(58,42,32,0.4)] transition-all duration-500 hover:-translate-y-1 cursor-pointer">
+                    <div class="relative flex-none w-[42%] min-[400px]:w-[35%] md:w-full h-[5.5rem] md:h-[6.5rem] snap-center bg-aureum-diamond rounded-xl md:rounded-2xl border border-[#EAD49E]/20 overflow-hidden flex flex-col justify-center items-center group shadow-lg hover:shadow-[0_10px_25px_rgba(58,42,32,0.4)] transition-all duration-500 hover:-translate-y-1 cursor-pointer">
                         <div class="absolute inset-0 opacity-20 group-hover:opacity-60 transition-opacity duration-700 z-0">
                             <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
                                 <path d="M 30 80 Q 40 50 50 20" fill="none" stroke="#EAD49E" stroke-width="0.2" class="opacity-50" />
@@ -207,18 +207,18 @@
                                 </circle>
                             </svg>
                         </div>
-                        <span class="relative z-10 text-[#EAD49E] text-[clamp(0.35rem,1.5vw,0.6rem)] font-bold uppercase tracking-[0.1em] md:tracking-[0.15em] text-center transition-colors group-hover:text-white px-0.5">Lifting</span>
-                        <span class="relative z-10 text-white/80 text-[clamp(0.3rem,1.2vw,0.45rem)] font-semibold uppercase tracking-widest text-center mt-0.5">Tecnológico</span>
+                        <span class="relative z-10 text-[#EAD49E] text-[8px] md:text-[10px] font-bold uppercase tracking-[0.15em] text-center transition-colors group-hover:text-white px-1">Lifting</span>
+                        <span class="relative z-10 text-white/80 text-[6.5px] md:text-[7.5px] font-semibold uppercase tracking-widest text-center mt-1">Tecnológico</span>
                     </div>
                 </div>
 
-                <!-- BLOCO BASE: Subtítulo e Botão ancorados no fundo para preencher o vácuo -->
-                <div class="flex flex-col items-center w-full pb-4 md:pb-8">
-                    <p class="reveal text-[clamp(0.45rem,1.5vw,0.65rem)] font-bold uppercase tracking-[0.2em] leading-relaxed text-aureum-dark/90 text-center max-w-[280px] md:max-w-lg mb-6 md:mb-10" style="transition-delay: 0.4s;">
+                <!-- BLOCO BASE: Subtítulo e Botão com UX Premium -->
+                <div class="flex flex-col items-center w-full pb-8 md:pb-12 px-4">
+                    <p class="reveal text-[10px] md:text-[12px] font-bold uppercase tracking-[0.2em] leading-relaxed text-aureum-dark/90 text-center max-w-[300px] md:max-w-lg mb-8 md:mb-10" style="transition-delay: 0.4s;">
                         A ciência clínica que esculpe a sua autoridade.<br /> Resultados imperceptíveis, simetria absoluta.
                     </p>
 
-                    <a href="#diag-content" class="reveal inline-flex items-center justify-center px-10 py-3.5 md:py-4 bg-aureum-btn border border-aureum-dark/10 text-aureum-dark text-[clamp(0.5rem,1.5vw,0.6rem)] uppercase tracking-[0.3em] font-bold rounded-md shadow-[0_4px_15px_rgba(58,42,32,0.08)] hover:scale-[1.02] transition-transform duration-500" style="transition-delay: 0.5s;">
+                    <a href="#diag-content" class="reveal inline-flex items-center justify-center px-12 py-4 md:py-5 bg-aureum-btn/90 backdrop-blur-md border border-aureum-dark/15 text-aureum-dark text-[10px] md:text-[11px] uppercase tracking-[0.3em] font-bold rounded-lg shadow-[0_10px_30px_rgba(58,42,32,0.15)] hover:scale-[1.03] transition-all duration-500" style="transition-delay: 0.5s;">
                         Agendar Mapeamento
                     </a>
                 </div>
@@ -463,17 +463,17 @@
             }
         });
 
-        // 2. Comportamento Adaptativo da Navbar (Sempre visível, apenas ajusta a transparência)
+        // 2. Comportamento Adaptativo da Navbar (Invisível no topo, Vidro Escuro no Scroll)
         const navbar = document.getElementById('navbar');
         window.addEventListener('scroll', () => {
             if (window.scrollY > 20) {
-                // Ao rolar: Translucidez a 85% e fica mais fina com blur acentuado
-                navbar.classList.add('py-3', 'md:py-4', 'bg-aureum-taupe/85', 'shadow-md', 'backdrop-blur-lg');
-                navbar.classList.remove('py-5', 'md:py-6', 'bg-aureum-taupe/40');
+                // Ao rolar: Vidro jateado escuro mantendo altura generosa
+                navbar.classList.add('py-4', 'md:py-5', 'bg-[#3A2A20]/80', 'backdrop-blur-xl', 'shadow-md');
+                navbar.classList.remove('pt-6', 'pb-5', 'md:py-8', 'bg-transparent');
             } else {
-                // No topo: Bem transparente (40%) mas com Glass (backdrop-blur-lg) firme
-                navbar.classList.add('py-5', 'md:py-6', 'bg-aureum-taupe/40', 'backdrop-blur-lg');
-                navbar.classList.remove('py-3', 'md:py-4', 'bg-aureum-taupe/85', 'shadow-md');
+                // No topo: Totalmente transparente
+                navbar.classList.add('pt-6', 'pb-5', 'md:py-8', 'bg-transparent');
+                navbar.classList.remove('py-4', 'md:py-5', 'bg-[#3A2A20]/80', 'backdrop-blur-xl', 'shadow-md');
             }
         });
 
