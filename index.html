@@ -1,519 +1,378 @@
-<!DOCTYPE html>
-<html lang="pt-BR" class="scroll-smooth">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AUREUM | A Escultura do Poder</title>
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+
+/**
+ * AUREUM - THE SOVEREIGN EDITION (v27.0) - MOCHA & ROSE UPDATE
+ * Engenharia: Grid GLID & Global Design Consortium
+ * Trend 2026: Bottom Arch Hero / Mocha & Rose Palette / Ultra-Glassmorphism
+ */
+
+const IMAGES = {
+  // Nova imagem editorial: Contornos faciais marcantes, tons quentes e sofisticados
+  hero: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1528&auto=format&fit=crop", 
+  doctor: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=1470&auto=format&fit=crop",
+  gallery: [
+    "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?q=80&w=1376&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=1470&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=1487&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1629909613654-28e377c37b09?q=80&w=1470&auto=format&fit=crop"
+  ]
+};
+
+// --- MOTOR CSS DE LUXO ---
+const ShimmerStyles = () => (
+  <style>{`
+    @keyframes text-shimmer {
+      0% { background-position: -200% center; }
+      100% { background-position: 200% center; }
+    }
+    .shimmer-rose {
+      background: linear-gradient(to right, #C07C88 20%, #F5E6E8 50%, #C07C88 80%);
+      background-size: 200% auto;
+      color: transparent;
+      -webkit-background-clip: text;
+      background-clip: text;
+      animation: text-shimmer 5s ease-in-out infinite;
+    }
+    .shimmer-dark {
+      background: linear-gradient(to right, #2A1B14 20%, #C07C88 50%, #2A1B14 80%);
+      background-size: 200% auto;
+      color: transparent;
+      -webkit-background-clip: text;
+      background-clip: text;
+      animation: text-shimmer 6s linear infinite;
+    }
+    .hide-scrollbar::-webkit-scrollbar { display: none; }
+    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     
-    <!-- Cor do Navegador (Match com o topo do site) -->
-    <meta name="theme-color" content="#8D8177">
+    /* A Evolução 2026: Efeito U-Shape (Círculo para baixo) */
+    .arch-bottom {
+      border-bottom-left-radius: 4rem;
+      border-bottom-right-radius: 4rem;
+    }
+    @media (min-width: 768px) {
+      .arch-bottom {
+        border-bottom-left-radius: 25rem;
+        border-bottom-right-radius: 25rem;
+      }
+    }
     
-    <!-- Tipografia Unificada -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Tailwind CSS Engine -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        serif: ['"Cormorant Garamond"', 'serif'],
-                        sans: ['Montserrat', 'sans-serif'],
-                    },
-                    colors: {
-                        /* PALETA EXATA DO PRINT (Trancada) */
-                        'aureum-taupe': '#8D8177',  
-                        'aureum-light': '#F6EFEA',  
-                        'aureum-dark': '#3A2A20',   
-                        'aureum-diamond': '#5C4033',
-                        'aureum-gold': '#D4AF37',   
-                        'aureum-btn': '#E8DED7'     
-                    }
-                }
-            }
-        }
-    </script>
+    /* Efeito de Reflexo no Vidro Orgânico */
+    .mirror-glare {
+      background: linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.12) 25%, transparent 30%, transparent 40%, rgba(255,255,255,0.04) 45%, transparent 50%);
+      background-size: 200% 200%;
+      transition: background-position 0.8s ease-out;
+    }
+    .group:hover .mirror-glare {
+      background-position: 100% 100%;
+    }
+  `}</style>
+);
 
-    <style>
-        body {
-            background-color: #F6EFEA;
-            color: #3A2A20;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-        }
+const LuxuryGrain = () => (
+  <div className="fixed inset-0 z-[99] pointer-events-none opacity-[0.04] mix-blend-overlay bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" aria-hidden="true" />
+);
 
-        /* Gradiente do Título "do Poder" */
-        .text-gradient-gold {
-            background: linear-gradient(to right, #C89F59 0%, #EAD49E 50%, #B88A44 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
+const RoseGoldCursor = () => {
+  const [pos, setPos] = useState({ x: 0, y: 0 });
+  useEffect(() => {
+    const move = (e) => setPos({ x: e.clientX, y: e.clientY });
+    window.addEventListener("mousemove", move);
+    return () => window.removeEventListener("mousemove", move);
+  }, []);
 
-        /* Ouro Lento e Único (The Signature Glow) */
-        @keyframes text-shimmer-gold-once {
-            0% { background-position: -200% center; }
-            100% { background-position: 0% center; }
-        }
-        .shimmer-true-gold {
-            background: linear-gradient(to right, #D4AF37 10%, #FBF5B7 50%, #D4AF37 90%);
-            background-size: 200% auto;
-            color: transparent;
-            -webkit-background-clip: text;
-            background-clip: text;
-            animation: text-shimmer-gold-once 8s cubic-bezier(0.25, 1, 0.5, 1) 1 forwards;
-        }
+  return (
+    <motion.div
+      className="fixed top-0 left-0 w-6 h-6 border border-[#C07C88]/60 rounded-full z-[100] pointer-events-none hidden lg:flex items-center justify-center mix-blend-difference"
+      animate={{ x: pos.x - 12, y: pos.y - 12 }}
+      transition={{ type: "spring", damping: 40, stiffness: 300, mass: 0.5 }}
+    >
+      <div className="w-[3px] h-[3px] bg-[#F5E6E8] rounded-full shadow-[0_0_12px_#E8C8C1]" />
+    </motion.div>
+  );
+};
 
-        /* Oculta scrollbars nativas para design limpo */
-        .hide-scrollbar::-webkit-scrollbar { display: none; }
-        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+// --- A REVOLUÇÃO 2026: PILARES ANATÔMICOS DE CONTORNO FACIAL ---
+const ContourPillar = ({ title, subtitle, svgPath, delay = 0 }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 30 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, margin: "-20px" }}
+    transition={{ delay, duration: 1.2, ease: [0.19, 1, 0.22, 1] }}
+    whileHover={{ y: -8, scale: 1.02 }}
+    className="relative group cursor-pointer w-[38%] min-[400px]:w-[32%] md:w-[150px] h-[8.5rem] md:h-[220px] flex-none snap-center"
+    aria-label={`${title} ${subtitle}`}
+  >
+    {/* O Vidro Dark Mocha (Garante Alto Contraste Absoluto com os textos claros) */}
+    <div className="w-full h-full rounded-[2.5rem] md:rounded-[4rem] bg-[#2A1B14]/85 backdrop-blur-xl border border-[#C07C88]/30 shadow-[0_15px_40px_rgba(42,27,20,0.5)] overflow-hidden flex flex-col items-center justify-between py-5 md:py-8 relative z-10 transition-all duration-700 group-hover:bg-[#2A1B14] group-hover:border-[#C07C88]/70 group-hover:shadow-[0_20px_50px_rgba(192,124,136,0.35)]">
 
-        /* Animações de entrada (Reveal) - Luxuosas, lentas e progressivas */
-        .reveal {
-            opacity: 0;
-            transform: translateY(25px);
-            transition: opacity 1.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 1.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
+      <div className="absolute inset-0 mirror-glare pointer-events-none opacity-50"></div>
 
-        /* Motor do Acordeão do FAQ (Suave e expansivo) */
-        .faq-content {
-            transition: max-height 0.7s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease-in-out;
-            max-height: 0;
-            opacity: 0;
-            overflow: hidden;
-        }
-        .faq-content.open {
-            max-height: 600px; /* Margem segura para mobile */
-            opacity: 1;
-        }
-    </style>
-</head>
-<body class="antialiased">
+      {/* A Linha Dourada (Mapeamento Anatômico em SVG Puro) */}
+      <div className="absolute inset-0 flex items-center justify-center opacity-60 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
+        <svg viewBox="0 0 100 100" className="w-[60%] h-[60%] stroke-[#E8C8C1] fill-none drop-shadow-[0_0_8px_rgba(192,124,136,0.8)]" strokeWidth="1.5" strokeLinecap="round">
+          <motion.path
+             d={svgPath}
+             initial={{ pathLength: 0 }}
+             whileInView={{ pathLength: 1 }}
+             transition={{ duration: 2.5, ease: "easeInOut", delay: delay + 0.5 }}
+          />
+        </svg>
+      </div>
 
-    <!-- 1. NAVEGAÇÃO SUPERIOR (Mais Alta e Tipografia Legível no Mobile) -->
-    <header id="navbar" class="fixed top-0 w-full z-50 px-4 md:px-12 pt-6 pb-5 md:py-8 flex justify-between items-center bg-transparent transition-all duration-500">
-        
-        <!-- Bloco Esquerdo -->
-        <div class="flex flex-col text-left w-1/3 z-10">
-            <span class="text-[9px] sm:text-[10px] md:text-[11px] font-bold uppercase tracking-[0.2em] shimmer-true-gold">Alistair Sterling</span>
-            <span class="text-[7px] sm:text-[8px] md:text-[9px] uppercase tracking-widest text-white/90 mt-0.5">Clínica Facial</span>
-        </div>
-        
-        <!-- Bloco Central -->
-        <div class="absolute left-1/2 -translate-x-1/2 flex flex-col items-center z-10 w-1/3">
-            <h2 class="text-2xl md:text-3xl font-serif tracking-[0.3em] leading-none text-white">AUREUM</h2>
-        </div>
-
-        <!-- Bloco Direito -->
-        <div class="flex flex-col items-end text-right w-1/3 z-10">
-            <span class="text-[9px] sm:text-[10px] md:text-[11px] font-bold uppercase tracking-[0.2em] shimmer-true-gold">Padrão</span>
-            <span class="text-[7px] sm:text-[8px] md:text-[9px] uppercase tracking-widest text-white/90 mt-0.5">Alta Cosmiatria</span>
-        </div>
-    </header>
-
-    <!-- 2. HERO SECTION (Tipografia Ajustada e Legível) -->
-    <section class="relative min-h-[100svh] flex flex-col bg-aureum-light">
-        <div class="relative w-full flex flex-col items-center pt-[100px] md:pt-[130px] pb-6 md:pb-10 flex-grow z-20">
-            
-            <!-- Imagem de Fundo c/ Blend Estratégico -->
-            <div class="absolute inset-0 w-full h-full z-0">
-                <div class="w-full h-full bg-cover bg-center mix-blend-multiply opacity-80" style="background-image: url('https://imgmista.carrd.co/assets/images/image01.jpg?v=00ef1fcf');"></div>
-                <div class="absolute inset-0 bg-gradient-to-b from-aureum-light/10 via-aureum-light/50 to-aureum-light"></div>
-            </div>
-
-            <!-- Corpo do Hero -->
-            <div class="relative z-20 w-full max-w-5xl flex flex-col items-center justify-between flex-grow px-0 md:px-6 h-full min-h-[calc(100svh-130px)]">
-                
-                <!-- BLOCO TOPO -->
-                <div class="flex flex-col items-center w-full pt-8 md:pt-10 px-4">
-                    <h1 class="reveal flex flex-col items-center text-center font-serif text-[4.5rem] sm:text-[6rem] md:text-[9.5rem] leading-[0.85] tracking-tighter text-aureum-dark" style="transition-delay: 0.1s;">
-                        <span>Geometria</span>
-                        <span class="italic text-gradient-gold font-light mt-1 md:mt-2">do Poder.</span>
-                    </h1>
-                </div>
-
-                <!-- BLOCO MEIO: Cartões -->
-                <div class="reveal w-full max-w-full md:max-w-4xl flex overflow-x-auto hide-scrollbar snap-x snap-mandatory gap-3 px-4 md:px-0 md:grid md:grid-cols-4 md:gap-6 my-auto py-4" style="transition-delay: 0.2s;">
-                    
-                    <!-- 1. Modulação -->
-                    <div class="relative flex-none w-[42%] min-[400px]:w-[35%] md:w-full h-[5.5rem] md:h-[6.5rem] snap-center bg-aureum-diamond rounded-xl md:rounded-2xl border border-[#EAD49E]/20 overflow-hidden flex flex-col justify-center items-center group shadow-lg hover:shadow-[0_10px_25px_rgba(58,42,32,0.4)] transition-all duration-500 hover:-translate-y-1 cursor-pointer">
-                        <div class="absolute inset-0 opacity-20 group-hover:opacity-60 transition-opacity duration-700 z-0">
-                            <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-                                <line x1="10" y1="40" x2="90" y2="40" stroke="#EAD49E" stroke-width="0.2" class="opacity-40" />
-                                <line x1="10" y1="50" x2="90" y2="50" stroke="#D4AF37" stroke-width="0.5" />
-                                <line x1="10" y1="60" x2="90" y2="60" stroke="#EAD49E" stroke-width="0.2" class="opacity-40" />
-                                <circle cx="35" cy="50" r="1.5" fill="#EAD49E" class="animate-pulse" />
-                                <circle cx="65" cy="50" r="1.5" fill="#EAD49E" class="animate-pulse" style="animation-delay: 1s;" />
-                            </svg>
-                        </div>
-                        <span class="relative z-10 text-[#EAD49E] text-[8px] md:text-[10px] font-bold uppercase tracking-[0.15em] text-center transition-colors group-hover:text-white px-1">Modulação</span>
-                        <span class="relative z-10 text-white/80 text-[6.5px] md:text-[7.5px] font-semibold uppercase tracking-widest text-center mt-1">Muscular</span>
-                    </div>
-
-                    <!-- 2. Arquitetura -->
-                    <div class="relative flex-none w-[42%] min-[400px]:w-[35%] md:w-full h-[5.5rem] md:h-[6.5rem] snap-center bg-aureum-diamond rounded-xl md:rounded-2xl border border-[#EAD49E]/20 overflow-hidden flex flex-col justify-center items-center group shadow-lg hover:shadow-[0_10px_25px_rgba(58,42,32,0.4)] transition-all duration-500 hover:-translate-y-1 cursor-pointer">
-                        <div class="absolute inset-0 opacity-20 group-hover:opacity-60 transition-opacity duration-700 z-0">
-                            <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-                                <path d="M 15 30 L 15 15 L 30 15" fill="none" stroke="#D4AF37" stroke-width="0.5" />
-                                <path d="M 85 30 L 85 15 L 70 15" fill="none" stroke="#D4AF37" stroke-width="0.5" />
-                                <path d="M 15 70 L 15 85 L 30 85" fill="none" stroke="#D4AF37" stroke-width="0.5" />
-                                <path d="M 85 70 L 85 85 L 70 85" fill="none" stroke="#D4AF37" stroke-width="0.5" />
-                                <line x1="15" y1="50" x2="85" y2="50" stroke="#EAD49E" stroke-width="0.2" stroke-dasharray="2 2" />
-                            </svg>
-                        </div>
-                        <span class="relative z-10 text-[#EAD49E] text-[8px] md:text-[10px] font-bold uppercase tracking-[0.15em] text-center transition-colors group-hover:text-white px-1">Arquitetura</span>
-                        <span class="relative z-10 text-white/80 text-[6.5px] md:text-[7.5px] font-semibold uppercase tracking-widest text-center mt-1">Facial</span>
-                    </div>
-
-                    <!-- 3. Bioestímulo -->
-                    <div class="relative flex-none w-[42%] min-[400px]:w-[35%] md:w-full h-[5.5rem] md:h-[6.5rem] snap-center bg-aureum-diamond rounded-xl md:rounded-2xl border border-[#EAD49E]/20 overflow-hidden flex flex-col justify-center items-center group shadow-lg hover:shadow-[0_10px_25px_rgba(58,42,32,0.4)] transition-all duration-500 hover:-translate-y-1 cursor-pointer">
-                        <div class="absolute inset-0 opacity-20 group-hover:opacity-60 transition-opacity duration-700 z-0">
-                            <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-                                <defs>
-                                    <radialGradient id="glow">
-                                        <stop offset="0%" stop-color="#EAD49E" />
-                                        <stop offset="100%" stop-color="transparent" />
-                                    </radialGradient>
-                                </defs>
-                                <circle cx="50" cy="50" r="40" fill="url(#glow)" class="opacity-50 animate-pulse" />
-                                <circle cx="35" cy="35" r="1.5" fill="#D4AF37" class="animate-pulse" style="animation-delay: 0.3s"/>
-                                <circle cx="65" cy="65" r="1.5" fill="#D4AF37" class="animate-pulse" style="animation-delay: 1.2s"/>
-                                <circle cx="70" cy="30" r="1" fill="#D4AF37" class="animate-pulse" style="animation-delay: 0.8s"/>
-                            </svg>
-                        </div>
-                        <span class="relative z-10 text-[#EAD49E] text-[8px] md:text-[10px] font-bold uppercase tracking-[0.15em] text-center transition-colors group-hover:text-white px-1">Bioestímulo</span>
-                        <span class="relative z-10 text-white/80 text-[6.5px] md:text-[7.5px] font-semibold uppercase tracking-widest text-center mt-1">Profundo</span>
-                    </div>
-
-                    <!-- 4. Lifting -->
-                    <div class="relative flex-none w-[42%] min-[400px]:w-[35%] md:w-full h-[5.5rem] md:h-[6.5rem] snap-center bg-aureum-diamond rounded-xl md:rounded-2xl border border-[#EAD49E]/20 overflow-hidden flex flex-col justify-center items-center group shadow-lg hover:shadow-[0_10px_25px_rgba(58,42,32,0.4)] transition-all duration-500 hover:-translate-y-1 cursor-pointer">
-                        <div class="absolute inset-0 opacity-20 group-hover:opacity-60 transition-opacity duration-700 z-0">
-                            <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-                                <path d="M 30 80 Q 40 50 50 20" fill="none" stroke="#EAD49E" stroke-width="0.2" class="opacity-50" />
-                                <path d="M 50 90 Q 60 60 70 30" fill="none" stroke="#D4AF37" stroke-width="0.6" />
-                                <path d="M 70 80 Q 80 50 90 20" fill="none" stroke="#EAD49E" stroke-width="0.2" class="opacity-50" />
-                                <circle cx="0" cy="0" r="1.5" fill="#EAD49E">
-                                    <animateMotion path="M 50 90 Q 60 60 70 30" dur="3s" repeatCount="indefinite" />
-                                </circle>
-                            </svg>
-                        </div>
-                        <span class="relative z-10 text-[#EAD49E] text-[8px] md:text-[10px] font-bold uppercase tracking-[0.15em] text-center transition-colors group-hover:text-white px-1">Lifting</span>
-                        <span class="relative z-10 text-white/80 text-[6.5px] md:text-[7.5px] font-semibold uppercase tracking-widest text-center mt-1">Tecnológico</span>
-                    </div>
-                </div>
-
-                <!-- BLOCO BASE: Subtítulo e Botão com UX Premium -->
-                <div class="flex flex-col items-center w-full pb-8 md:pb-12 px-4">
-                    <p class="reveal text-[10px] md:text-[12px] font-bold uppercase tracking-[0.2em] leading-relaxed text-aureum-dark/90 text-center max-w-[300px] md:max-w-lg mb-8 md:mb-10" style="transition-delay: 0.4s;">
-                        A ciência clínica que esculpe a sua autoridade.<br /> Resultados imperceptíveis, simetria absoluta.
-                    </p>
-
-                    <a href="#diag-content" class="reveal inline-flex items-center justify-center px-12 py-4 md:py-5 bg-aureum-btn/90 backdrop-blur-md border border-aureum-dark/15 text-aureum-dark text-[10px] md:text-[11px] uppercase tracking-[0.3em] font-bold rounded-lg shadow-[0_10px_30px_rgba(58,42,32,0.15)] hover:scale-[1.03] transition-all duration-500" style="transition-delay: 0.5s;">
-                        Agendar Mapeamento
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 3. BARRA DE RECONHECIMENTO INSTITUCIONAL (Social Proof Sutil) -->
-    <div class="w-full bg-white border-y border-aureum-dark/5 py-8 md:py-10 reveal relative z-30">
-        <div class="max-w-5xl mx-auto px-6 flex flex-col items-center justify-center">
-            <span class="text-[7px] md:text-[9px] uppercase tracking-[0.4em] font-bold text-aureum-gold mb-4">Padrão de Excelência Internacional</span>
-            <div class="flex flex-row flex-wrap justify-center gap-10 md:gap-20 opacity-30 grayscale">
-                <span class="font-serif text-aureum-dark text-lg md:text-2xl tracking-widest uppercase font-bold">Scientific</span>
-                <span class="font-serif text-aureum-dark text-lg md:text-2xl tracking-widest uppercase font-bold">Aesthetic</span>
-                <span class="font-serif text-aureum-dark text-lg md:text-2xl tracking-widest uppercase font-bold">Premium</span>
-            </div>
-        </div>
+      {/* Tipografia de Base (Agora com contraste perfeito) */}
+      <div className="flex flex-col items-center z-20 mt-auto w-full px-2">
+        <span className="text-[#F5E6E8] text-[6.5px] md:text-[8px] font-bold uppercase tracking-[0.25em] md:tracking-[0.4em] text-center transition-colors duration-500 group-hover:text-white drop-shadow-md">
+          {title}
+        </span>
+        <div className="w-3 md:w-5 h-[1.5px] bg-gradient-to-r from-transparent via-[#C07C88] to-transparent my-1.5 md:my-2 group-hover:w-6 md:group-hover:w-8 transition-all duration-500" />
+        <span className="text-white/90 text-[5px] md:text-[6px] font-medium uppercase tracking-widest text-center drop-shadow-md">
+          {subtitle}
+        </span>
+      </div>
     </div>
+  </motion.div>
+);
 
-    <!-- 4. SEÇÃO DA DIREÇÃO CLÍNICA -->
-    <section class="py-24 md:py-36 px-6 md:px-12 bg-white relative overflow-hidden border-b border-aureum-dark/5">
-        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 md:gap-24 items-center relative z-10">
-            <div class="order-2 md:order-1 flex flex-col items-center md:items-start text-center md:text-left reveal">
-                <span class="text-[9px] md:text-[11px] tracking-[0.5em] uppercase font-bold mb-6 italic block text-aureum-gold">Direção Clínica</span>
-                <h2 class="text-5xl md:text-8xl font-serif mb-8 md:mb-12 leading-none text-aureum-dark tracking-tighter">Dr. Alistair <br/><span class="italic text-gradient-gold">Sterling.</span></h2>
-                
-                <p class="text-aureum-dark/80 font-light leading-relaxed text-sm md:text-base uppercase tracking-[0.15em] mb-10 md:mb-12 border-l-2 border-aureum-gold/40 pl-6 max-w-xl">
-                    A vanguarda da cosmiatria aplicada à anatomia facial. Protocolos que unem rigor médico europeu e visão artística para decifrar a proporção áurea humana.
-                </p>
-                
-                <div class="grid grid-cols-2 gap-4 md:gap-8 w-full max-w-lg">
-                    <div class="bg-aureum-light border border-aureum-gold/20 p-6 md:p-8 rounded-xl shadow-sm">
-                        <span class="text-[10px] md:text-xs uppercase tracking-widest font-bold text-aureum-gold block mb-2 md:mb-3">Soberania</span>
-                        <p class="text-[8px] uppercase tracking-widest text-aureum-dark/80 leading-relaxed font-semibold">Sua Presença Falará Por Si.</p>
-                    </div>
-                    <div class="bg-aureum-light border border-aureum-gold/20 p-6 md:p-8 rounded-xl shadow-sm">
-                        <span class="text-[10px] md:text-xs uppercase tracking-widest font-bold text-aureum-gold block mb-2 md:mb-3">Certificação</span>
-                        <p class="text-[8px] uppercase tracking-widest text-aureum-dark/80 leading-relaxed font-semibold">CRM XXXXXX | RQE XXXXXX</p>
-                    </div>
-                </div>
-            </div>
+// --- COMPONENTE PRINCIPAL ---
+export default function App() {
+  const [scrolled, setScrolled] = useState(false);
+  const containerRef = useRef(null);
 
-            <div class="order-1 md:order-2 relative group w-full max-w-md mx-auto md:max-w-none reveal" style="transition-delay: 0.2s;">
-                <div class="aspect-[3/4] md:aspect-[4/5] rounded-2xl md:rounded-[2rem] overflow-hidden shadow-2xl relative border border-aureum-gold/20">
-                    <!-- Alive Effect no retrato -->
-                    <div class="w-full h-full bg-cover bg-center grayscale opacity-90 transition-transform duration-[10s] ease-in-out group-hover:scale-105" style="background-image: url('https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=1470&auto=format&fit=crop');" role="img" aria-label="Retrato da Direção Clínica"></div>
-                </div>
-            </div>
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start start", "end end"] });
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
+  const heroScale = useTransform(scrollYProgress, [0, 0.3], [1, 1.05]);
+  const yParallax = useTransform(scrollYProgress, [0, 1], [0, -150]);
+
+  return (
+    <main ref={containerRef} className="bg-[#FAF7F5] text-[#2A1B14] font-sans selection:bg-[#C07C88]/30 overflow-x-hidden min-h-screen relative pb-20">
+      <ShimmerStyles />
+      <LuxuryGrain />
+      <RoseGoldCursor />
+      
+      {/* NAVEGAÇÃO SUPERIOR: Mais Translúcida (bg-opacity 50%) com Blur Elevado */}
+      <header className={`fixed top-0 w-full z-50 transition-all duration-700 px-6 py-5 md:px-12 flex justify-between items-center ${scrolled ? 'bg-[#2A1B14]/50 backdrop-blur-xl py-4 shadow-[0_10px_30px_rgba(42,27,20,0.1)] border-b border-[#C07C88]/10' : 'bg-transparent py-6 md:py-8'}`}>
+        <div className="flex flex-col">
+          <span className="text-[7px] md:text-[9px] font-bold uppercase tracking-[0.3em] shimmer-rose">Alistair Sterling</span>
+          <span className="text-[5.5px] md:text-[7px] uppercase tracking-widest text-[#FAF7F5]/80 font-medium mt-0.5">Clínica Facial</span>
         </div>
-    </section>
-
-    <!-- 5. GALERIA: RESULTADOS & EXCELÊNCIA -->
-    <section class="py-24 md:py-40 px-4 md:px-12 bg-aureum-light relative">
-        <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-16 md:mb-24 reveal">
-                <span class="text-[9px] md:text-[11px] tracking-[0.6em] uppercase font-bold mb-6 italic block text-aureum-gold">O Museu da Pele</span>
-                <h3 class="text-4xl md:text-6xl font-serif tracking-tighter text-aureum-dark">Resultados & Excelência</h3>
-                <p class="text-[9px] md:text-[11px] uppercase tracking-[0.2em] text-aureum-dark/70 mt-6 max-w-2xl mx-auto leading-relaxed">
-                    A prova clínica irrefutável da nossa dedicação ao perfeccionismo milimétrico.
-                </p>
-            </div>
-            
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-                <!-- Imagem 1 Labeled -->
-                <div class="reveal aspect-[4/5] rounded-lg overflow-hidden border border-white shadow-md group relative">
-                    <div class="w-full h-full bg-cover bg-center grayscale mix-blend-multiply opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-[1.5s] ease-out group-hover:scale-105" style="background-image: url('https://images.unsplash.com/photo-1596755094514-f87e34085b2c?q=80&w=1376&auto=format&fit=crop');"></div>
-                    <div class="absolute bottom-0 left-0 w-full p-5 bg-gradient-to-t from-[#3A2A20]/95 via-[#3A2A20]/60 to-transparent translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-700 ease-out">
-                        <span class="text-white text-[7px] uppercase tracking-widest font-bold block mb-1">Caso Clínico 01</span>
-                        <span class="text-aureum-gold text-[10px] uppercase tracking-[0.15em] font-serif italic">Protocolo Full Face</span>
-                    </div>
-                </div>
-                
-                <!-- Imagem 2 Labeled -->
-                <div class="reveal aspect-[4/5] rounded-lg overflow-hidden border border-white shadow-md group relative" style="transition-delay: 0.1s;">
-                    <div class="w-full h-full bg-cover bg-center grayscale mix-blend-multiply opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-[1.5s] ease-out group-hover:scale-105" style="background-image: url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=1470&auto=format&fit=crop');"></div>
-                    <div class="absolute bottom-0 left-0 w-full p-5 bg-gradient-to-t from-[#3A2A20]/95 via-[#3A2A20]/60 to-transparent translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-700 ease-out">
-                        <span class="text-white text-[7px] uppercase tracking-widest font-bold block mb-1">Caso Clínico 02</span>
-                        <span class="text-aureum-gold text-[10px] uppercase tracking-[0.15em] font-serif italic">Lifting Estrutural</span>
-                    </div>
-                </div>
-                
-                <!-- Imagem 3 Labeled -->
-                <div class="reveal aspect-[4/5] rounded-lg overflow-hidden border border-white shadow-md group relative" style="transition-delay: 0.2s;">
-                    <div class="w-full h-full bg-cover bg-center grayscale mix-blend-multiply opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-[1.5s] ease-out group-hover:scale-105" style="background-image: url('https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=1487&auto=format&fit=crop');"></div>
-                    <div class="absolute bottom-0 left-0 w-full p-5 bg-gradient-to-t from-[#3A2A20]/95 via-[#3A2A20]/60 to-transparent translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-700 ease-out">
-                        <span class="text-white text-[7px] uppercase tracking-widest font-bold block mb-1">Caso Clínico 03</span>
-                        <span class="text-aureum-gold text-[10px] uppercase tracking-[0.15em] font-serif italic">Simetria Labial</span>
-                    </div>
-                </div>
-                
-                <!-- Imagem 4 Labeled -->
-                <div class="reveal aspect-[4/5] rounded-lg overflow-hidden border border-white shadow-md group relative" style="transition-delay: 0.3s;">
-                    <div class="w-full h-full bg-cover bg-center grayscale mix-blend-multiply opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-[1.5s] ease-out group-hover:scale-105" style="background-image: url('https://images.unsplash.com/photo-1629909613654-28e377c37b09?q=80&w=1470&auto=format&fit=crop');"></div>
-                    <div class="absolute bottom-0 left-0 w-full p-5 bg-gradient-to-t from-[#3A2A20]/95 via-[#3A2A20]/60 to-transparent translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-700 ease-out">
-                        <span class="text-white text-[7px] uppercase tracking-widest font-bold block mb-1">Caso Clínico 04</span>
-                        <span class="text-aureum-gold text-[10px] uppercase tracking-[0.15em] font-serif italic">Modulação de Olhar</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 6. FAQ TRANSPARÊNCIA CLÍNICA -->
-    <section class="py-24 md:py-36 px-6 md:px-12 bg-white relative border-y border-aureum-dark/5">
-        <div class="max-w-4xl mx-auto">
-            <div class="text-center mb-14 md:mb-20 reveal">
-                <span class="text-[9px] md:text-[11px] tracking-[0.6em] uppercase font-bold mb-6 italic block text-aureum-gold">Transparência</span>
-                <h3 class="text-3xl md:text-5xl font-serif tracking-tighter text-aureum-dark">Dúvidas Frequentes</h3>
-            </div>
-            
-            <div class="space-y-4 md:space-y-6 reveal" style="transition-delay: 0.2s;">
-                <!-- Q1 -->
-                <div class="border border-aureum-dark/10 rounded-lg bg-aureum-light/40 overflow-hidden transition-colors hover:bg-aureum-light">
-                    <button class="faq-btn w-full px-6 py-6 md:px-8 text-left flex justify-between items-center focus:outline-none">
-                        <span class="text-[10px] md:text-xs uppercase tracking-[0.15em] font-bold text-aureum-dark">Os resultados correm o risco de ficar artificiais?</span>
-                        <span class="text-aureum-gold text-xl transition-transform duration-500 ease-in-out font-light">+</span>
-                    </button>
-                    <div class="faq-content px-6 md:px-8">
-                        <p class="text-[10px] md:text-xs tracking-widest leading-loose text-aureum-dark/70 pb-6 uppercase border-t border-aureum-dark/5 pt-4 mt-2">
-                            Absolutamente não. A nossa filosofia baseia-se na "Soberania Visual", onde os procedimentos são milimetricamente calculados para restaurar a anatomia sem alterar a sua identidade central. O verdadeiro luxo reside na invisibilidade da intervenção.
-                        </p>
-                    </div>
-                </div>
-                
-                <!-- Q2 -->
-                <div class="border border-aureum-dark/10 rounded-lg bg-aureum-light/40 overflow-hidden transition-colors hover:bg-aureum-light">
-                    <button class="faq-btn w-full px-6 py-6 md:px-8 text-left flex justify-between items-center focus:outline-none">
-                        <span class="text-[10px] md:text-xs uppercase tracking-[0.15em] font-bold text-aureum-dark">Existe tempo de recuperação clínica (Downtime)?</span>
-                        <span class="text-aureum-gold text-xl transition-transform duration-500 ease-in-out font-light">+</span>
-                    </button>
-                    <div class="faq-content px-6 md:px-8">
-                        <p class="text-[10px] md:text-xs tracking-widest leading-loose text-aureum-dark/70 pb-6 uppercase border-t border-aureum-dark/5 pt-4 mt-2">
-                            Trabalhamos exclusivamente com tecnologias minimamente invasivas e cânulas de alta precisão que reduzem quase a zero os hematomas e inchaços. Na grande maioria dos nossos protocolos avançados, a paciente retorna à sua agenda executiva imediatamente.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Q3 -->
-                <div class="border border-aureum-dark/10 rounded-lg bg-aureum-light/40 overflow-hidden transition-colors hover:bg-aureum-light">
-                    <button class="faq-btn w-full px-6 py-6 md:px-8 text-left flex justify-between items-center focus:outline-none">
-                        <span class="text-[10px] md:text-xs uppercase tracking-[0.15em] font-bold text-aureum-dark">A origem dos insumos e segurança biológica são garantidas?</span>
-                        <span class="text-aureum-gold text-xl transition-transform duration-500 ease-in-out font-light">+</span>
-                    </button>
-                    <div class="faq-content px-6 md:px-8">
-                        <p class="text-[10px] md:text-xs tracking-widest leading-loose text-aureum-dark/70 pb-6 uppercase border-t border-aureum-dark/5 pt-4 mt-2">
-                            Operamos exclusivamente com o topo da pirâmide da indústria farmacêutica global (marcas aprovadas pelo FDA e ANVISA). A segurança biológica a longo prazo e a previsibilidade celular são inegociáveis na nossa prática médica diária.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 7. DIAGNÓSTICO FINAL (O Fundo do Funil) -->
-    <section class="py-32 md:py-48 px-4 md:px-12 bg-white relative" id="diag-content">
-        <div class="reveal max-w-5xl mx-auto text-center bg-aureum-light p-10 md:p-24 rounded-2xl shadow-xl relative z-10 border border-aureum-dark/5">
-            <span class="text-[9px] md:text-[11px] tracking-[0.6em] uppercase font-bold mb-8 md:mb-12 block text-aureum-gold">O Santuário Clínico</span>
-            <h4 class="text-4xl sm:text-5xl md:text-7xl font-serif mb-10 md:mb-14 tracking-tighter italic text-aureum-dark">A Arquitetura do Tratamento.</h4>
-            
-            <p class="text-[10px] md:text-[12px] uppercase tracking-[0.15em] text-aureum-dark/70 mb-12 md:mb-16 max-w-2xl mx-auto leading-relaxed">
-                Cada face é um projeto ímpar. O nosso mapeamento anatómico define o protocolo exato para restaurar a firmeza, o volume e a jovialidade da sua pele com segurança clínica absoluta.
-            </p>
-
-            <a href="#" class="inline-block px-12 md:px-20 py-4 md:py-5 bg-aureum-diamond text-white text-[9px] md:text-[10px] tracking-[0.3em] uppercase font-bold rounded-lg shadow-[0_10px_30px_rgba(92,64,51,0.3)] hover:scale-105 transition-transform duration-500">
-                Falar com Especialista
-            </a>
-        </div>
-    </section>
-
-    <!-- 8. RODAPÉ INSTITUCIONAL (Masterpiece Footer) -->
-    <footer class="pt-24 pb-32 md:pb-24 px-6 md:px-12 bg-aureum-dark text-aureum-light">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16 reveal pb-12 border-b border-aureum-gold/20 mb-10 text-center md:text-left">
-            
-            <!-- Marca -->
-            <div class="flex flex-col items-center md:items-start">
-                <h2 class="text-4xl font-serif tracking-[0.3em] mb-6 text-[#EAD49E]">AUREUM</h2>
-                <p class="text-[9.5px] uppercase tracking-[0.15em] text-aureum-light/70 leading-loose max-w-[280px]">
-                    O ápice da ciência clínica aliada à proporção áurea. A sua autoridade visual esculpida com precisão inegociável e segurança molecular.
-                </p>
-            </div>
-
-            <!-- Atendimento -->
-            <div class="flex flex-col items-center md:items-start md:pl-10 border-t md:border-t-0 md:border-l border-aureum-gold/10 pt-8 md:pt-0">
-                <h3 class="text-[11px] uppercase tracking-[0.2em] font-bold text-aureum-gold mb-6">Atendimento Clínico</h3>
-                <p class="text-[9px] uppercase tracking-widest text-aureum-light/80 mb-3">Vila Clementino - São Paulo, SP</p>
-                <p class="text-[9px] uppercase tracking-widest text-aureum-light/80 mb-3">Seg a Sex: 09h às 19h</p>
-                <p class="text-[9px] uppercase tracking-widest text-aureum-light/80">Atendimento apenas com agendamento</p>
-            </div>
-
-            <!-- Contatos -->
-            <div class="flex flex-col items-center md:items-start md:pl-10 border-t md:border-t-0 md:border-l border-aureum-gold/10 pt-8 md:pt-0">
-                <h3 class="text-[11px] uppercase tracking-[0.2em] font-bold text-aureum-gold mb-6">Contato e Chancelas</h3>
-                <p class="text-[9px] uppercase tracking-widest text-aureum-light/80 mb-3">+55 [XX] XXXXX-XXXX</p>
-                <p class="text-[9px] uppercase tracking-widest text-aureum-light/80 mb-3">CRM XXXXXX | RQE XXXXXX</p>
-                <p class="text-[9px] uppercase tracking-widest text-aureum-light/80">Direção Técnica Especializada</p>
-            </div>
-
-        </div>
-
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center text-center gap-4">
-            <p class="text-[8px] uppercase tracking-[0.2em] text-aureum-light/40 font-bold">
-                &copy; 2026 AUREUM Clínica de Alta Cosmiatria. Privacidade Absoluta de Dados.
-            </p>
-            <p class="text-[8px] uppercase tracking-[0.2em] text-aureum-light/40 font-bold">
-                Design Executivo por Grid GLID
-            </p>
-        </div>
-    </footer>
-
-    <!-- --- BOTÃO CONCIERGE FLUTUANTE (Arquitetura Responsiva, True Glassmorphism) --- -->
-    <div id="floating-cta" class="fixed z-[100] transition-all duration-700 ease-out opacity-0 translate-y-10 pointer-events-none 
-                                  bottom-6 left-4 right-4 
-                                  md:bottom-8 md:right-8 md:left-auto md:w-auto">
         
-        <a href="#diag-content" class="flex items-center justify-center gap-4 w-full md:w-auto bg-[#3A2A20]/30 backdrop-blur-2xl rounded-xl md:rounded-lg px-8 py-5 shadow-[0_15px_40px_rgba(58,42,32,0.2)] hover:scale-[1.03] transition-transform duration-300 border border-white/20" aria-label="Falar com Especialista">
-            <span class="relative flex h-3 w-3 md:h-2.5 md:w-2.5">
-                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#EAD49E] opacity-75"></span>
-                <span class="relative inline-flex rounded-full h-full w-full bg-[#D4AF37]"></span>
-            </span>
-            <span class="text-white text-[11px] md:text-[10px] uppercase tracking-[0.3em] font-bold whitespace-nowrap shimmer-true-gold">
-                Falar com Especialista
-            </span>
-        </a>
-    </div>
+        <div className="flex flex-col items-center absolute left-1/2 -translate-x-1/2">
+          <h2 className="text-xl md:text-3xl font-serif tracking-[0.3em] leading-none text-[#FAF7F5] drop-shadow-lg">AUREUM</h2>
+        </div>
 
-    <!-- SCRIPTS VANILLA (Motor de Lógica e Animações) -->
-    <script>
-        // 1. Motor do Botão Flutuante (Revelar após 30% da página)
-        const floatingCta = document.getElementById('floating-cta');
+        <div className="flex flex-col items-end">
+           <span className="text-[7px] md:text-[9px] font-bold uppercase tracking-[0.3em] shimmer-rose">Padrão</span>
+           <span className="text-[5.5px] md:text-[7px] uppercase tracking-widest text-[#FAF7F5]/80 font-medium mt-0.5">Alta Cosmiatria</span>
+        </div>
+      </header>
 
-        window.addEventListener('scroll', () => {
-            const y = window.scrollY;
-            const bodyHeight = document.body.scrollHeight - window.innerHeight;
-            const scrollPercent = (y / bodyHeight) * 100;
-            
-            if (scrollPercent > 30) {
-                floatingCta.classList.remove('opacity-0', 'translate-y-10', 'pointer-events-none');
-                floatingCta.classList.add('opacity-100', 'translate-y-0', 'pointer-events-auto');
-            } else {
-                floatingCta.classList.add('opacity-0', 'translate-y-10', 'pointer-events-none');
-                floatingCta.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
-            }
-        });
-
-        // 2. Comportamento Adaptativo da Navbar (Invisível no topo, Vidro Escuro no Scroll)
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 20) {
-                // Ao rolar: Vidro jateado escuro mantendo altura generosa
-                navbar.classList.add('py-4', 'md:py-5', 'bg-[#3A2A20]/80', 'backdrop-blur-xl', 'shadow-md');
-                navbar.classList.remove('pt-6', 'pb-5', 'md:py-8', 'bg-transparent');
-            } else {
-                // No topo: Totalmente transparente
-                navbar.classList.add('pt-6', 'pb-5', 'md:py-8', 'bg-transparent');
-                navbar.classList.remove('py-4', 'md:py-5', 'bg-[#3A2A20]/80', 'backdrop-blur-xl', 'shadow-md');
-            }
-        });
-
-        // 3. Observer de Intersecção (Animações CSS "Reveal" de ultra luxo)
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                    observer.unobserve(entry.target); 
-                }
-            });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+      {/* 1. HERO SECTION: U-SHAPE ARCH E PALETA MARROM/ROSA */}
+      <section className="relative min-h-[100svh] flex flex-col items-center justify-start px-0 text-center bg-[#FAF7F5]">
         
-        // Trigger de segurança para quem carrega no topo
-        setTimeout(() => document.querySelectorAll('.reveal').forEach(el => {
-            if(el.getBoundingClientRect().top < window.innerHeight) el.classList.add('active');
-        }), 100);
+        {/* O Fundo Cortado em Círculo para Baixo */}
+        <motion.div 
+          style={{ opacity: heroOpacity, scale: heroScale }} 
+          className="absolute top-0 w-full h-[85vh] md:h-[92vh] flex items-start justify-center z-0"
+        >
+          {/* Classe 'arch-bottom' aplicada aqui */}
+          <div className="relative w-full h-full arch-bottom overflow-hidden shadow-[0_20px_80px_rgba(192,124,136,0.15)] bg-[#2A1B14]">
+             {/* Gradiente Mocha & Rose */}
+             <div className="absolute inset-0 bg-gradient-to-t from-[#2A1B14] via-[#2A1B14]/30 to-[#C07C88]/10 z-10" />
+             <div 
+               className="w-full h-full bg-cover bg-center mix-blend-luminosity opacity-70"
+               style={{ backgroundImage: `url(${IMAGES.hero})` }}
+               role="img" aria-label="Contornos faciais de alta estética"
+             />
+          </div>
+        </motion.div>
 
-        // 4. Lógica do FAQ Dinâmico (Acordeão de Autoridade)
-        const faqBtns = document.querySelectorAll('.faq-btn');
-        faqBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const content = btn.nextElementSibling;
-                const icon = btn.querySelector('span:last-child');
-                const isOpen = content.classList.contains('open');
-                
-                // Fecha todos os outros suavemente
-                document.querySelectorAll('.faq-content').forEach(c => {
-                    c.classList.remove('open');
-                });
-                document.querySelectorAll('.faq-btn span:last-child').forEach(i => {
-                    i.style.transform = 'rotate(0deg)';
-                });
+        {/* Zona Central (Títulos no alto, Pilares sobrepondo o corte em arco) */}
+        <div className="relative z-20 w-full max-w-6xl flex flex-col items-center justify-between flex-grow px-0 md:px-6 h-full min-h-[100svh] pt-28 md:pt-36 pb-12">
+           
+           <div className="flex flex-col items-center px-4 w-full">
+               <motion.div 
+                 initial={{ opacity: 0, y: 20 }}
+                 animate={{ opacity: 1, y: 0 }}
+                 transition={{ duration: 1.2, ease: "easeOut" }}
+                 className="inline-flex items-center gap-3 mb-6 md:mb-10 bg-[#2A1B14]/30 backdrop-blur-xl px-6 py-2.5 rounded-full border border-[#C07C88]/30 shadow-lg"
+               >
+                 <span className="text-[#F5E6E8] text-[6.5px] md:text-[8px] font-bold uppercase tracking-[0.4em] md:tracking-[0.6em] shimmer-rose">
+                   A Evolução do Contorno
+                 </span>
+               </motion.div>
 
-                // Se não estava aberto, abre o atual
-                if (!isOpen) {
-                    content.classList.add('open');
-                    icon.style.transform = 'rotate(45deg)';
-                }
-            });
-        });
-    </script>
-</body>
-</html>
+               <motion.h1 
+                 initial={{ opacity: 0, scale: 0.95 }}
+                 animate={{ opacity: 1, scale: 1 }}
+                 transition={{ duration: 1.5, ease: [0.19, 1, 0.22, 1], delay: 0.2 }}
+                 className="text-[4rem] sm:text-[6rem] md:text-[9rem] lg:text-[10rem] font-serif leading-[0.8] tracking-tighter mb-4 md:mb-0 text-[#FAF7F5] drop-shadow-2xl"
+               >
+                 Geometria <br />
+                 <span className="italic shimmer-rose font-light mt-1 block drop-shadow-md">do Poder.</span>
+               </motion.h1>
+           </div>
+
+           {/* OS PILARES DE CONTORNO (Sobrepondo a linha curva do arco do Hero) */}
+           <div className="w-full pl-6 pr-2 md:px-0 mt-auto md:mt-16 mb-8 md:mb-12">
+             <div className="flex overflow-x-auto hide-scrollbar snap-x snap-mandatory gap-4 md:flex-row md:justify-center md:gap-10 pb-4 md:pb-0">
+                <ContourPillar title="Modulação" subtitle="Supercílio" svgPath="M 20 60 Q 50 20 80 60" delay={0.4} />
+                <ContourPillar title="Sculpt" subtitle="Volume Malar" svgPath="M 20 30 C 40 20, 60 80, 80 40" delay={0.5} />
+                <ContourPillar title="Colágeno" subtitle="Derme Profunda" svgPath="M 20 70 Q 50 40 80 70 M 30 80 Q 50 55 70 80" delay={0.6} />
+                <ContourPillar title="HIFU" subtitle="Lifting Cervical" svgPath="M 20 80 L 40 80 Q 70 80 80 20" delay={0.7} />
+             </div>
+           </div>
+
+           {/* Subtitle finalizando a dobra */}
+           <div className="flex flex-col items-center px-4 md:px-0 mt-auto">
+               <motion.p 
+                 initial={{ opacity: 0 }}
+                 animate={{ opacity: 1 }}
+                 transition={{ duration: 1.2, delay: 0.8 }}
+                 className="text-[8px] md:text-[11px] uppercase tracking-[0.25em] leading-relaxed italic text-[#2A1B14]/80 font-bold max-w-xs md:max-w-md text-center"
+               >
+                 A ciência clínica que esculpe a sua autoridade. <br className="hidden md:block" /> Resultados imperceptíveis, simetria absoluta.
+               </motion.p>
+           </div>
+        </div>
+      </section>
+
+      {/* 2. SEÇÃO ESPECIALISTA */}
+      <section className="py-24 md:py-48 px-6 md:px-12 bg-[#FAF7F5] relative overflow-hidden">
+        <motion.div style={{ y: yParallax }} className="absolute -left-40 top-0 text-[30rem] text-[#C07C88]/[0.03] font-serif pointer-events-none select-none">A</motion.div>
+        
+        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 md:gap-24 items-center relative z-10">
+          <div className="order-2 md:order-1 flex flex-col items-center md:items-start text-center md:text-left">
+            <span className="text-[#C07C88] text-[9px] md:text-[11px] tracking-[0.5em] uppercase font-bold mb-6 italic block shimmer-rose">Direção Clínica</span>
+            <h2 className="text-5xl md:text-8xl font-serif mb-8 md:mb-12 leading-none text-[#2A1B14] tracking-tighter drop-shadow-sm">Dr. Alistair <br/><span className="italic shimmer-rose">Sterling.</span></h2>
+            
+            <p className="text-[#2A1B14]/80 font-medium leading-relaxed text-sm md:text-base uppercase tracking-[0.15em] mb-10 md:mb-12 md:border-l-2 md:border-[#C07C88]/40 md:pl-8 max-w-xl">
+              Graduado pelas mais prestigiadas academias europeias, o Dr. Sterling atua como arquiteto da face. Seu protocolo une precisão cirúrgica e medicina molecular para resgatar a proporção áurea humana.
+            </p>
+            
+            <div className="grid grid-cols-2 gap-4 md:gap-8 w-full max-w-lg">
+              <div className="bg-white border border-[#C07C88]/15 p-6 md:p-8 rounded-2xl shadow-[0_10px_30px_rgba(192,124,136,0.05)]">
+                 <span className="text-[10px] md:text-xs uppercase tracking-widest font-bold text-[#C07C88] block mb-2 shimmer-rose">Soberania</span>
+                 <p className="text-[8px] md:text-[9px] uppercase tracking-widest text-[#2A1B14]/70 leading-relaxed font-bold">Sua presença fala por si.</p>
+              </div>
+              <div className="bg-white border border-[#C07C88]/15 p-6 md:p-8 rounded-2xl shadow-[0_10px_30px_rgba(192,124,136,0.05)]">
+                 <span className="text-[10px] md:text-xs uppercase tracking-widest font-bold text-[#C07C88] block mb-2 shimmer-rose">Certificação</span>
+                 <p className="text-[8px] md:text-[9px] uppercase tracking-widest text-[#2A1B14]/70 leading-relaxed font-bold">CRM 230830 | RQE 138733</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="order-1 md:order-2 relative group w-full max-w-md mx-auto md:max-w-none">
+            <div className="aspect-[3/4] md:aspect-[4/5] rounded-[2rem] md:rounded-[3rem] overflow-hidden border border-[#C07C88]/20 shadow-[0_30px_60px_rgba(42,27,20,0.15)] relative">
+              <div 
+                className="w-full h-full bg-cover bg-center grayscale opacity-90 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-[2s] ease-out"
+                style={{ backgroundImage: `url(${IMAGES.doctor})` }}
+                role="img" aria-label="Retrato de autoridade do Dr. Alistair Sterling"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 3. GALERIA ATMOSFÉRICA */}
+      <section className="py-24 md:py-48 px-4 md:px-12 bg-white">
+         <div className="text-center mb-16 md:mb-24">
+           <span className="text-[#C07C88] text-[9px] md:text-[11px] tracking-[0.6em] uppercase font-bold mb-4 md:mb-6 block shimmer-rose">O Museu da Pele</span>
+           <h3 className="text-4xl md:text-7xl font-serif italic tracking-tighter text-[#2A1B14] shimmer-dark">Resultados & Excelência</h3>
+         </div>
+         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-7xl mx-auto">
+            {IMAGES.gallery.map((img, i) => (
+              <motion.article 
+                key={i} 
+                whileHover={{ y: -10 }}
+                className="aspect-[4/5] rounded-xl md:rounded-2xl overflow-hidden border border-[#C07C88]/10 shadow-xl relative group cursor-pointer"
+              >
+                <div 
+                  className="w-full h-full bg-cover bg-center grayscale mix-blend-multiply opacity-80 group-hover:grayscale-0 group-hover:opacity-100 group-hover:mix-blend-normal transition-all duration-1000 group-hover:scale-110"
+                  style={{ backgroundImage: `url(${img})` }}
+                />
+              </motion.article>
+            ))}
+         </div>
+      </section>
+
+      {/* 4. DIAGNÓSTICO INTERATIVO (Fundo do Funil) */}
+      <section className="py-24 md:py-48 px-4 md:px-12 bg-[#FAF7F5] border-y border-[#C07C88]/10 relative">
+        <div className="max-w-5xl mx-auto text-center bg-white/60 backdrop-blur-3xl p-8 md:p-24 rounded-[2rem] md:rounded-[4rem] border border-[#C07C88]/20 shadow-[0_20px_50px_rgba(192,124,136,0.08)] relative z-10">
+          <span className="text-[#C07C88] text-[9px] md:text-[11px] tracking-[0.6em] uppercase font-bold mb-8 md:mb-10 block shimmer-rose">O Santuário Clínico</span>
+          <h4 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-serif mb-12 md:mb-16 tracking-tighter italic text-[#2A1B14] shimmer-dark">A Arquitetura do Tratamento.</h4>
+          
+          <p className="text-[10px] md:text-[12px] uppercase tracking-[0.15em] text-[#2A1B14]/80 font-medium mb-12 md:mb-16 max-w-2xl mx-auto leading-relaxed">
+             Cada face é um projeto ímpar. O nosso mapeamento anatômico define o protocolo exato para restaurar a firmeza, o volume e a jovialidade da sua pele com segurança clínica absoluta.
+          </p>
+
+          <a href="#" className="inline-flex items-center justify-center px-12 md:px-16 py-4 md:py-5 bg-[#2A1B14] text-[#F5E6E8] text-[9px] md:text-[10px] tracking-[0.3em] uppercase font-bold rounded-lg shadow-[0_10px_30px_rgba(42,27,20,0.3)] hover:scale-105 hover:shadow-[0_15px_40px_rgba(192,124,136,0.3)] transition-all duration-500 border border-[#C07C88]/40">
+              Falar com Especialista
+          </a>
+        </div>
+      </section>
+
+      {/* 5. RODAPÉ ESTATUTÁRIO */}
+      <footer className="py-24 md:py-32 px-6 md:px-12 text-center bg-[#2A1B14]">
+        <div className="max-w-7xl mx-auto flex flex-col items-center">
+           <h2 className="text-4xl md:text-7xl font-serif tracking-[0.4em] md:tracking-[0.5em] mb-16 md:mb-24 text-[#E8C8C1] shimmer-rose">AUREUM</h2>
+           
+           <div className="grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-20 text-[8px] md:text-[10px] uppercase tracking-widest font-bold opacity-80 mb-20 md:mb-24 w-full text-left md:text-center text-[#FAF7F5]">
+              <div className="flex flex-col gap-4">
+                <span className="text-[#C07C88] italic tracking-[0.3em]">Location</span>
+                <p>Vila Clementino<br/>São Paulo, SP</p>
+              </div>
+              <div className="flex flex-col gap-4">
+                <span className="text-[#C07C88] italic tracking-[0.3em]">Direct</span>
+                <p>+55 11 97555.6269</p>
+              </div>
+              <div className="flex flex-col gap-4">
+                <span className="text-[#C07C88] italic tracking-[0.3em]">Medical Reg.</span>
+                <p>CRM 230830<br/>RQE 138733</p>
+              </div>
+              <div className="flex flex-col gap-4">
+                <span className="text-[#C07C88] italic tracking-[0.3em]">Design</span>
+                <p>Grid GLID 2026</p>
+              </div>
+           </div>
+
+           <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-[#C07C88]/30 to-transparent mb-12" />
+           
+           <p className="text-[9px] md:text-[11px] uppercase tracking-[0.8em] md:tracking-[1.2em] text-[#C07C88] font-bold italic">
+             Privacidade e Sigilo Absolutos
+           </p>
+        </div>
+      </footer>
+
+      {/* --- BOTÃO FLUTUANTE DE CONVERSÃO (18k ROSE GOLD EDITION) --- */}
+      <motion.a
+        href="#"
+        initial={{ y: 100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 1.5, duration: 1, type: "spring", bounce: 0.4 }}
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[100] px-8 md:px-12 py-4.5 md:py-5 bg-[#2A1B14]/60 backdrop-blur-2xl border border-[#C07C88]/40 rounded-xl md:rounded-lg shadow-[0_15px_40px_rgba(42,27,20,0.5)] flex items-center gap-4 overflow-hidden group cursor-pointer w-[90%] sm:w-auto justify-center"
+        aria-label="Contactar Concierge VIP via WhatsApp"
+      >
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-[150%] group-hover:translate-x-[150%] transition-transform duration-1000 ease-in-out" />
+        
+        <span className="relative z-10 flex h-2.5 w-2.5">
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#E8C8C1] opacity-75"></span>
+          <span className="relative inline-flex rounded-full h-full w-full bg-[#E8C8C1]"></span>
+        </span>
+        
+        <span className="relative z-10 text-[9.5px] md:text-[10px] uppercase tracking-[0.3em] md:tracking-[0.4em] font-extrabold text-[#FAF7F5] drop-shadow-sm transition-all duration-300 shimmer-rose">
+          Agendar Mapeamento
+        </span>
+      </motion.a>
+
+    </main>
+  );
+}
